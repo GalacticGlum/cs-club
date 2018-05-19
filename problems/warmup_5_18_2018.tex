@@ -1,0 +1,46 @@
+\include{base}
+
+% ********************** Settings *************************
+\newcommand{\problemsetTitle}{Warmup Problems}
+\newcommand{\problemsetSubheader}{SLSS Computer Science Club}
+\newcommand{\problemsetDate}{May 18, 2018}
+\newcommand{\problemsetAuthor}{Shon Verch}
+
+\begin{document}
+
+\makeHeader
+
+\section{Find the Missing Number}
+The set $S = \{x \in \mathbb{Z} \mid 0 \le x < n\}$ has one missing number. Given the set, find the missing number which makes the set $S$ complete.
+
+\constraints
+$1 \leq n \leq 10^5$
+
+\inputformat
+The first line of input describes the non-negative integer $n$. The second line of input describes $n-1$ space separated non-negative integers describing the elements of the set $S$.
+
+\outputformat
+Output a single line containing the number which is missing from the set.
+
+\vspace{1em}
+
+\addsample
+{
+3\\
+0 1
+}
+{
+2
+}
+
+\pushnewpage
+
+\addsample
+{
+9\\
+6 4 2 3 5 7 0 1
+}
+{
+8
+}
+\end{document}
