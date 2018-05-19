@@ -51,6 +51,15 @@
 \@addtoreset{sample}{section}
 \makeatother
 
+\newcommand{\initSettings}[4]
+{
+        % ********************** Settings *************************
+    \newcommand{\problemsetTitle}{#1}
+    \newcommand{\problemsetSubheader}{#2}
+    \newcommand{\problemsetDate}{#3}
+    \newcommand{\problemsetAuthor}{#4}
+}
+
 \newcommand{\makeHeader}
 {
     {\noindent\fontseries{b}\fontsize{24}{30}\selectfont\problemsetTitle}
