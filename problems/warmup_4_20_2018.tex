@@ -1,0 +1,60 @@
+\include{base}
+
+\initSettings{Warmup Problems}{SLSS Computer Science Club}
+             {April 20, 2018}{Shon Verch}
+
+\begin{document}
+\makeHeader
+
+\section{Multiples of 3 and 5}
+If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+
+Find the sum of all the multiples of 3 or 5 below a non-negative integer $n$.
+
+\constraints
+$1 \leq n \leq 10^{12}$
+
+\inputformat
+The first line of input describes the non-negative integer $n$.
+
+\outputformat
+Print the sum of all the multiples of 3 or 5 below a non-negative integer $n$.
+
+\addsampleExplanation
+{
+10
+}
+{
+23
+}
+{
+3, 5, 6, and 9 are the natural numbers that are multiples of 3 or 5 below 10. The sum of these multiples is 23.
+}
+
+\newpage\section{Daily Temperatures}
+Andy is recording temperatures for his meteorology class. Everyday, at exactly \texttt{12:00 PM}, he records the temperature. As part of his research, Andy wants to know, for each day, how many days you would have to wait until a warmer temperature.
+
+Write a program to produce a list that, for each day in the input, tells you how many days you would have to wait until a warmer temperature occurs.
+
+\constraints
+$1 \leq n \leq 30000$\\
+$30 \leq t_i \leq 100$
+
+\inputformat
+The first line of input contains the non-negative integer $n$ which describes the amount of days which Andy recorded data for.
+
+The second line of input describes $n$ space-separated non-negative integers where each integer $t_i$ represents the temperature of day $i$.
+
+\outputformat
+Print $n$ space separated integers describing how many days you would have to wait until a warmer temperature occurs. If there is no future day for which this is possible, print \texttt{0}.
+
+\addsample
+{
+8\\
+73 74 75 71 69 72 76 73
+}
+{
+1 1 4 2 1 1 0 0
+}
+
+\end{document}
