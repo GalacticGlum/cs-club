@@ -1,28 +1,44 @@
-\input{base}
+\documentclass{problem-set}
 
-\initSettings{Challenge Problem Set}{SLSS Computer Science Club}
-             {April 13, 2018}{Shon Verch}
+\title{Challenge Problem Set}
+\subheader{SLSS Computer Science Club}
+\date{April 13, 2018}
+\author{Shon Verch}
 
 \begin{document}
-\makeHeader
+\maketitle
 
 \section{The Admissions Panel}
-At Ivy League University, the admissions panel consists of 7 highly-skilled mathematicians. In a goal to preserve the mathematics culture of the university, the panel has devised a process to assess the mathematical capabilities of applicants.
+At Ivy League University, the admissions panel consists of 
+7 highly-skilled mathematicians. In a goal to preserve the 
+mathematics culture of the university, the panel has devised 
+a process to assess the mathematical capabilities of applicants.
 
-Before the selection process begins, each applicant receives a set $S = \{a_1,\;a_2,\;\ldots,\;a_n\}$ of $n $ integers. 
+Before the selection process begins, each applicant receives a set 
+$S = \{a_1,\;a_2,\;\ldots,\;a_n\}$ of $n $ integers. 
 
-At each iteration of the selection process, a random applicant is called and is asked to select a non-empty subset from $S$ such that it had not been selected by a previous applicant and that the sum of the elements of the subset is even.
+At each iteration of the selection process, a random applicant is called 
+and is asked to select a non-empty subset from $S$ such that it 
+had not been selected by a previous applicant and that the sum of 
+the elements of the subset is even.
 
-The selection process ends when all possible subsets have been selected by the applicants.\\
+The selection process ends when all possible subsets have been
+ selected by the applicants.
 
-Write a program to determine the total number of times applicants can be called assuming each applicant gives the correct answer.
+Write a program to determine the total number of times applicants 
+can be called assuming each applicant gives the correct answer.
 
 \noindent
 \textbf{Note}
 \begin{enumerate}
-    \item Two subsets are different if there exists an element $a_k$ that exists in one subset but not in the other. For example, the set $\{2,\;3\}$ has $4$ subsets: $\{\}$, $\{2\}$, $\{3\}$, $\{2,\;3\}$.
+    \item Two subsets are different if there exists an element $a_k$ 
+    that exists in one subset but not in the other. For example, 
+    the set $\{2,\;3\}$ has $4$ subsets: $\{\}$, $\{2\}$, $\{3\}$, 
+    $\{2,\;3\}$.
     \item Applicants can be called to select a subset multiple times.
-    \item If $a_i=a_j$---that is, if two elements in the set have the same value---choosing $a_i$ and choosing $a_j$ are considered two \textit{different} subsets.
+    \item If $a_i=a_j$---that is, if two elements in the set have 
+    the same value---choosing $a_i$ and choosing $a_j$ are considered 
+    two \textit{different} subsets.
 \end{enumerate}
 
 \inputformat
@@ -73,7 +89,6 @@ The output consists of several lines as per the following criteria: if Pebbles i
 \pushnewpage
 
 \addsampleExplanation{1\\2}{Unable to reach block.}{Pebbles can jump to the $1$st block. From here, she is allowed to make a move to the $3$rd block only. Therefore, sho cannot step onto the $2$nd block.}
-
 \addsampleExplanation{1\\3}{Keep going Pebbles! 2}{Pebbles can make a second move to reach the $3$rd block. Therefore, she can step on the $3$rd block in just 2 moves.}
 
 \end{document}
