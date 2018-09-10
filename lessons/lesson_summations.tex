@@ -1,4 +1,5 @@
 \documentclass[prereq]{cslesson}
+\usepackage{amsmath}
 
 \title{A Quick Overview of Summations}
 \author{SLSS Computer Science Club}
@@ -7,7 +8,23 @@
 \begin{document}
     
 \maketitle
-    
+
+As we analyse algorithms and describe their properties, we will need to express large sums over many variables. Typically, we express these sorts of sums as an 
+expression in the general form
+\begin{equation*}
+    S=a_1+a_2+\ldots+a_n
+    \label{eq:verbose_sum}
+\end{equation*}
+where each number $a_k,\;1 \leq k \leq n$ has been defined. While this notation is mathematically ``fine,'' it is rather verbose and long-winded---especially 
+when you are summing over a large amount of variables and expressions. Consider the sum of the expression $x^2+x$ where $1 \leq x \leq 5$:
+\begin{equation}
+    S=(1^2+1)+(2^2+2)+(3^2+3)+(4^2+4)+(5^2+5).
+    \label{eq:verbose_sum_expression}
+\end{equation}
+Obviously, equation \ref{eq:verbose_sum_expression} is undesirable in real mathematics because it is much too verbose and space-consuming.
+Instead, we need a terser shorthand notation for expressing sums. The \textit{summation} notation provides a convenient and powerful tool for 
+expressing and manipulating sums. This lesson develops the notation and introduces general techniques, formulas, and properties.
+
 \section{Notation}
 
 \end{document}

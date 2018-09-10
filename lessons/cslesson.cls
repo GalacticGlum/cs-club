@@ -51,6 +51,7 @@
     \vspace{3ex}
     \noindent
     \titlehrule
+    \vspace{3ex}
 }
 
 % ************* Chapter and section formatting ****************
