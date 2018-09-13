@@ -36,6 +36,9 @@
 \ProcessOptions\relax
 
 % ************* Problem formatting helpers ****************
+
+\newcommand{\difficulty}[1]{\noindent\textbf{Difficulty}: #1\\[\baselineskip]}
+
 \newlength{\rulelength}
 \newcommand{\inputformat}{\vspace{\baselineskip}\par\noindent\textbf{Input Format}\\[0.2\baselineskip]}
     
