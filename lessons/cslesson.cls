@@ -6,6 +6,13 @@
 \RequirePackage[dvips,letterpaper,margin=1in,bottom=0.7in]{geometry}
 \RequirePackage{helvet}
 \RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\textit{``Dedicated to Papa Smurf''}}
+\rfoot{\thepage}
 
 % ************* Options ****************
 \newif\ifprereq
