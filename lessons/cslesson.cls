@@ -68,3 +68,7 @@
 \titleformat{\section}
   {\normalfont\sffamily\Large\bfseries}
   {\thesection}{1em}{}
+
+\RequirePackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}

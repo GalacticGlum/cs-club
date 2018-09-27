@@ -1,6 +1,8 @@
 \documentclass[prereq]{cslesson}
 \usepackage{amsmath}
 
+\numberwithin{equation}{section}
+
 \title{A Quick Overview of Summations}
 \author{SLSS Computer Science Club}
 \date{\today}
@@ -15,16 +17,47 @@ expression in the general form
     S=a_1+a_2+\ldots+a_n
     \label{eq:verbose_sum}
 \end{equation*}
-where each number $a_k,\;1 \leq k \leq n$ has been defined. While this notation is mathematically ``fine,'' it is rather verbose and long-winded---especially 
-when you are summing over a large amount of variables and expressions. Consider the sum of the expression $x^2+x$ where $1 \leq x \leq 5$:
+where each number $\{a_k \mid 1 \leq k \leq n\}$ has been defined. We use the `\ldots' (ellipsis) to denote that the sum should be
+completed based on the pattern established by the surrounding terms. We will refer to this notation of writing sums
+as \textit{``expanded sum notation.''}
+ 
+While this notation is mathematically correct, it is rather verbose and is oftentimes ambiguous.
+Sums like $1+2+\sqrt{2}+\ldots+e$ are meaningless without context because there is no pattern to the terms; that is,
+it is impossible for us to complete the sum because the present terms give no way to deduce a pattern.
+
+Often, we will also want to write sums of large expressions. Using the expanded notation can yield very large and
+ugly expressions. Consider the sum of the expression $x^2+x$ where $1 \leq x \leq 5$:
 \begin{equation}
     S=(1^2+1)+(2^2+2)+(3^2+3)+(4^2+4)+(5^2+5).
     \label{eq:verbose_sum_expression}
 \end{equation}
+
 Obviously, equation \ref{eq:verbose_sum_expression} is undesirable in real mathematics because it is much too verbose and space-consuming.
 Instead, we need a terser shorthand notation for expressing sums. The \textit{summation} notation provides a convenient and powerful tool for 
 expressing and manipulating sums. This lesson develops the notation and introduces general techniques, formulas, and properties.
 
 \section{Notation}
+We use the Greek letter $\sum$ to represent summation in a clean and concise manner. This notation is appropriately named \textit{Sigma-notation} or \textit{Summation notation}. These terms can be used interchangeably but for consistency, we will refer to the notation as summation-notation. We can rewrite the expanded sum $a_1+a_2+\ldots+a_n$, in summation-notation as
+\begin{equation}
+    \sum^n_{i=1}a_i.
+    \label{eq:first_summation}
+\end{equation}
+This notation tells us to include in the sum the terms $a_i$ whose index $i$ lies between the lower and upper bounds $1$ and $n$ respectively; that is, we sum over the terms $a_i$, where $i$ is from $1$ to $n$.
 
+The expression which belongs within the sum is called the \textit{summand}. The summand is the expression which we sum
+over given an index and upper bound. Note that the variable that represents the index (commonly called $i$) can in actuality, be anything. We can just as easily rewrite equation \ref{eq:first_summation} using the index variable $k$:
+\begin{equation}
+    \sum^n_{k=1}a_k.
+\end{equation}
+
+We are also able to represent multiple constraints on our index using summation-notation. This means that we are not restricted
+to consecutive integers. As an example, we can express the sum of the first $n$ odd positive integer squares as
+\begin{equation}
+    \sum^n_{\substack{i=1 \\ i\text{ odd}}}i^2,
+\end{equation}
+instead of,
+\begin{equation*}
+    \sum^{\floor*{n/2}}_{i=0}(2i+1)^2
+\end{equation*}
+which is far more complex, less clear, and cumbersome to read. 
 \end{document}
