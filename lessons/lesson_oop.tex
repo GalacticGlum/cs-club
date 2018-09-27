@@ -1,7 +1,7 @@
 \documentclass{cslesson}
 \usepackage{amsmath}
 \usepackage[parfill]{parskip}
-\usepackage{minted}
+\usepackage[cache=false]{minted}
 
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes,fit,arrows}
@@ -126,7 +126,7 @@ For example, the integer 17 is an instance of the \texttt{int} data type (or cla
 
 Variables that belong to an object or class are called fields. Furthermore, a method is a function that is part of a class. 
 This distinction in terminology allows us to differentiate between independent functions and variables and ones which belong to an object. 
-The fields and methods of the class are called \textit{attributes} of the class or object. There are two types of attributes---ones 
+The fields and methods of the class are called \textit{attributes} or \textit{members} of the class or object. There are two types of attributes---ones 
 which belong to an instance of the object and ones which belong to the object itself. They are called \textit{instance} attributes and \textit{class} 
 attributes respectively.
 
@@ -218,7 +218,85 @@ assigning the variable as a reference from \texttt{self} (this works because of 
 Notice how we \textit{do not} explicitly call the \texttt{\_\_init\_\_} method. This is a task that is relegated to the Python interpreter whenever we create
 a new instance of the \texttt{Person} class.
 
-\subsection{Class Variables}
+\subsection{Variables in Classes}
+In classes, they are two types of variables whose distinction relate to the \textit{namespace} 
+which they are \textit{bound} with. Fields are simply ordinary variables which are bound to either
+the instance or the class itself. When we say a variable is \textit{bound} to a class or object, we mean that the
+variables names are only valid in the context of the class or object.
+
+\textit{Class variables} are variables which are bound to the class itself. They can be accessed by all
+instances of the class and there exists only one copy of the variable. Because of this, if a class variable
+is changed, the change will be seen by all other instances.
+
+\textit{Instance variables} are variables which are bound to an instance of the class; that is, each individual
+instance has its own copy of the variable. They are neither shared nor related to another field with the same name
+in a different instance. Hence, if an instance variable is changed by one class, the change is not seen by an other instance.
+
+Let's use an example to illustrate the concept better:
+\newpage
+\begin{minted}[frame=lines, framesep=2mm]{python}
+    class Person:
+        # The amount of people which exist in the
+        # lifetime of the program
+        count = 0
+        
+        def __init__(self, name):
+            self.name = name
+            Person.count += 1
+        
+        def destroy(self):
+            print('Destroying ' + self.name)
+            Person.count -= 1
+            Person.get_count()
+
+        @classmethod
+        def get_count(cls):
+            print('There are ' + str(cls.count) + ' people left')
+
+    people = [
+        Person('Bob Sparkles'),
+        Person('Justin Findlay'),
+        Person('Trevor Lane),
+        Person('Steven Pinker')
+    ]
+
+    Person.get_count()
+    people[0].destroy()
+
+    print('\nPeople left:')
+    for person in people:
+        print(person.name)
+\end{minted}
+which outputs:
+\begin{minted}[frame=lines, framesep=2mm]{text}
+    There are 4 people left
+    Destroying Bob Sparkles
+    There are 3 people left
+
+    People left:
+    Bob Sparkles
+    Justin Findlay
+    Trevor Lane
+    Steven Pinker
+\end{minted}
+
+In the example code above, we have two variables: \texttt{population} and \texttt{name} which are class and instance
+variables respectively. That is, the \texttt{name} variable belongs in the namespace of the instance and the \texttt{population}
+variable belongs in the namespace of the class.
+
+We refer to the \texttt{population} variable as \texttt{Person.population} because it is a class variable. Conversely,
+we refer to the \texttt{name} variable as \texttt{self.name} because it is an instance variable. Notice that the difference
+between class and instance variables is simply in how we \textit{access} it.
+
+Methods can also belong to the class rather than the instance. In our example, the \texttt{get\_count} is a 
+\textit{class method}. We can define class methods using the \textit{classmethod} or \textit{staticmethod} 
+decorator. Practically---for our use cases---there is no difference between these two decorators; however, 
+by convention, \texttt{classmethod} should be used when the method accesses a class variable and \texttt{staticmethod} 
+when it does not.
+
+Another thing to note is that all variables in a class are \textit{public}. This means that we can access the variable
+from anywhere within the program. By convention, members of a class which are intended to be private are prefixed
+with a double underscore (e.g. \texttt{\_\_privatevar}).
 
 \section{Summary}
 Using object-oriented programming, it is now possible for us to efficiently and effortlessly represent a large amount of circles:
