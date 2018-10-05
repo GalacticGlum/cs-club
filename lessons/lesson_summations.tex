@@ -1,16 +1,17 @@
 \documentclass[prereq]{cslesson}
-\usepackage{amsmath}
-
 \numberwithin{equation}{section}
 
 \title{A Quick Overview of Summations}
 \author{SLSS Computer Science Club}
 \date{\today}
     
+\usepackage{enumitem}
+
 \begin{document}
     
 \maketitle
 
+\noindent
 As we analyse algorithms and describe their properties, we will need to express large sums over many variables. Typically, we express these sorts of sums as an 
 expression in the general form
 \begin{equation*}
@@ -25,39 +26,191 @@ While this notation is mathematically correct, it is rather verbose and is often
 Sums like $1+2+\sqrt{2}+\ldots+e$ are meaningless without context because there is no pattern to the terms; that is,
 it is impossible for us to complete the sum because the present terms give no way to deduce a pattern.
 
-Often, we will also want to write sums of large expressions. Using the expanded notation can yield very large and
-ugly expressions. Consider the sum of the expression $x^2+x$ where $1 \leq x \leq 5$:
-\begin{equation}
+Often, we will also want to write sums of large expressions. Using the expanded notation, we can yield very large and
+ugly expressions. Consider the sum of the expression $x^2+x$, where $1 \leq x \leq 5$:
+\begin{equation*}
     S=(1^2+1)+(2^2+2)+(3^2+3)+(4^2+4)+(5^2+5).
-    \label{eq:verbose_sum_expression}
-\end{equation}
-
-Obviously, equation \ref{eq:verbose_sum_expression} is undesirable in real mathematics because it is much too verbose and space-consuming.
-Instead, we need a terser shorthand notation for expressing sums. The \textit{summation} notation provides a convenient and powerful tool for 
+\end{equation*}
+Obviously, this is undesirable in real mathematics because it is much too verbose and space-consuming.
+Instead, we need a terser shorthand notation for expressing sums. The \textit{summation notation} provides a convenient and powerful tool for 
 expressing and manipulating sums. This lesson develops the notation and introduces general techniques, formulas, and properties.
 
 \section{Notation}
-We use the Greek letter $\sum$ to represent summation in a clean and concise manner. This notation is appropriately named \textit{Sigma-notation} or \textit{Summation notation}. These terms can be used interchangeably but for consistency, we will refer to the notation as summation-notation. We can rewrite the expanded sum $a_1+a_2+\ldots+a_n$, in summation-notation as
+We use the Greek letter $\sum$ to represent summation in a clean and concise manner. This notation is appropriately named \textit{Sigma-notation} or \textit{Summation notation}. These terms can be used interchangeably but for consistency, we will refer to the notation as summation notation. We can rewrite the expanded sum $a_1+a_2+\ldots+a_n$, in summation notation as
 \begin{equation}
     \sum^n_{i=1}a_i.
     \label{eq:first_summation}
 \end{equation}
-This notation tells us to include in the sum the terms $a_i$ whose index $i$ lies between the lower and upper bounds $1$ and $n$ respectively; that is, we sum over the terms $a_i$, where $i$ is from $1$ to $n$.
+This notation tells us to include in the sum the terms $a_i$ whose index $i$ lies between the lower and upper bounds, $1$ and $n$ respectively; that is, we sum over the terms $a_i$, where $i$ is from $1$ to $n$.
 
 The expression which belongs within the sum is called the \textit{summand}. The summand is the expression which we sum
-over given an index and upper bound. Note that the variable that represents the index (commonly called $i$) can in actuality, be anything. We can just as easily rewrite equation \ref{eq:first_summation} using the index variable $k$:
+over given a set of bounds. Note that the variable that represents the index ---commonly called $i$, $j$, or $k$---can in actuality, be anything. We can just as easily rewrite equation \ref{eq:first_summation} using the index variable $k$:
 \begin{equation}
     \sum^n_{k=1}a_k.
+    \label{eq:first_summation_k}
 \end{equation}
 
-We are also able to represent multiple constraints on our index using summation-notation. This means that we are not restricted
+We are also able to represent multiple constraints on our index using summation notation. This means that we are not restricted
 to consecutive integers. As an example, we can express the sum of the first $n$ odd positive integer squares as
-\begin{equation}
+\begin{equation*}
     \sum^n_{\substack{i=1 \\ i\text{ odd}}}i^2,
-\end{equation}
+\end{equation*}
 instead of,
 \begin{equation*}
     \sum^{\floor*{n/2}}_{i=0}(2i+1)^2
 \end{equation*}
-which is far more complex, less clear, and cumbersome to read. 
+which is far more complex, less clear, and cumbersome to read.
+
+Formally, a sum is written as
+\begin{equation}
+    \sum_{P(k)}a(k)
+\end{equation}
+to mean the sum of all the terms $a(k)$ such that $k$ is an integer which satisfies a condition $P(k)$. This formal definition is slightly different from the notation that has been presented because it does not contain an upper bound. Instead, $P(k)$ is a condition which defines both the lower and upper bound of $k$. For example, we can rewrite equation \ref{eq:first_summation} and \ref{eq:first_summation_k} as
+\begin{equation*}
+    \sum_{1 \leq k \leq n}a_k,
+\end{equation*}
+where $P(k)$ is a condition which evaluates to true or false for an input $k$. This notation has a few advantages to the delimited form of expressing sums. Most notably, we can manipulate and map sums to one another more easily. For example, suppose we wanted to change the index of equation \ref{eq:first_summation_k} from $k$ to $k+1$. Using this general notation, we have the sums
+\begin{equation*}
+    \sum_{1\leq k \leq n}{a_k}=\sum_{1\leq k+1 \leq n}{a_{k+1}}.
+\end{equation*}
+Looking at these sums, it's really easy to see how the index $k$ was substituted for $k+1$. On the other hand, using the delimited form, this manipulation of sums looks like
+\begin{equation*}
+    \sum^n_{k=1}a_k=\sum^{n-1}_{k=0}a_{k+1}.
+\end{equation*}
+which is less clear in how the substitution occurred.
+
+\section{Sum Manipulation}
+One of the greatest advantages with representing sums using summation notation is that we can easily manipulate and simplify sums using a few basic rules of algebra. These basic rules allow us to manipulate and apply transformations to sums.
+
+\begin{definition}[Distributive Law]
+Constants can be movied in and out of the summand.
+\begin{equation*}
+    \sum_{P(k)}xa_k=x\sum_{P(k)}a_k
+\end{equation*}
+where $\{a_k \in \mathbb{R} \mid 1 \leq k \leq n\}$ and $P(k)$ represents a property of $k$.
+\end{definition}
+
+\begin{definition}[Associative Law]
+We can break or combine multiple sums.
+\begin{equation*}
+    \sum_{P(k)}(a_k+b_k)=\sum_{P(k)}a_k+\sum_{P(k)}b_k
+\end{equation*}
+where $\{a_k, b_k \in \mathbb{R} \mid 1 \leq k \leq n\}$ and $P(k)$ represents a property of $k$.
+\end{definition}
+
+\begin{definition}[Commutative Law]
+The terms of the summand can be reordered in any way.
+\begin{equation*}
+    \sum_{i \in K}a_i=\sum_{p(k) \in K}a_{p(k)}
+\end{equation*}
+where $K$ represents a finite set of integers and $p(k)$ represents a permutation of $K$.
+\end{definition}
+
+\begin{example}
+Let $a$ represent a set of finite integers and $K=\{2,7,19\}$ represent the set of indices to sum over. Using the distributive law, we can write
+\begin{equation*}
+    xa_2+xa_7+xa_{19}=x(a_2+a_7+a_{19});
+\end{equation*}
+the associative law let's us write
+\begin{equation*}
+    (a_2+b_2)+(a_7+b_7)+(a_{19}+b_{19})=(a_2+a_7+a_{19})+(b_2+b_7+b_{19}),
+\end{equation*}
+where $b$ represents a set of finite integers; the commutative law let's us rewrite the terms in any order
+\begin{equation*}
+    a_2+a_7+a_{19}=a_{19}+a_2+a_7.
+\end{equation*}
+\end{example}
+
+These laws are very powerful because they allow us to transform sums into various forms. Compared to the expanded sum notation, transforming sums in summation notation is much easier. Applying these laws, let's try solving the sum of a general arithmetic progression
+\begin{equation}
+    S=\sum^n_{k=0}(a+bk).
+    \label{eq:arthmetic_seq}
+\end{equation}
+First, we will replace $k$ with $n-k$ using the commutative law
+\begin{equation*}
+    S=\sum^n_{a+b(n-k)};
+\end{equation*}
+By the associative law, we can now add these two sums together
+\begin{align*}
+    2S&=\sum^n_{k=0}(a+bk)+\sum^n_{k=0}(a+b(n-k));\\
+    &=\sum^n_{k=0}((a+bk)+(a+bn-bk));\\
+    &=\sum^n_{k=0}(2a+bn).
+\end{align*}
+Finally, we can apply the distributive property to factor out $2a+bn$ from the sum to obtain
+\begin{align*}
+    2S&=(2a+bn)\sum^n_{k=0}1;\\
+    &=(2a+bn)(n+1);\\
+    S&=a+\frac{bn(n+1)}{2}
+\end{align*}
+Using the three properties of summations, we have simplified equation \ref{eq:arthmetic_seq} to a closed-form solution:
+\begin{equation*}
+    \sum^n_{k=0}(a+bk)=a+\frac{bn(n+1)}{2}.
+\end{equation*}
+
+\section{Simplifying Sums}
+In the previous section, we looked at three basic, but very powerful rules which help us in manipulating sums. In this section, we will look at various formulas which can help us simplify different types of sums.
+
+\subsection{Arithmetic Series}
+\begin{theorem}[Sum of the first $n$ consecutive positive integers]
+\begin{align*}
+    \sum^n_{i=1}i&=1+2+\ldots+n\\
+    &=\frac{n(n+1)}{2}
+\end{align*}
+\end{theorem}
+
+\begin{theorem}[Sum of the first $n$ consecutive positive integer squares and cubes]
+\begin{align*}
+    \sum^n_{j=1}j^2&=1^2+2^2+\ldots+n^2\\
+    &=\frac{n(n+1)(2n+1)}{6}
+\end{align*}
+\begin{align*}
+    \sum^n_{k=1}k^3&=1^3+2^3+\ldots+n^3\\
+    &=\frac{n^2(n+1)^2}{4}
+\end{align*}
+\end{theorem}
+
+\subsection{Geometric Series}
+\begin{theorem}[Sum of the first $n$ consecutive positive integer exponential series]
+\begin{align*}
+    \sum^n_{i=0}x^i&=x^1+x^2+\ldots+x^n\\
+    &=\frac{x^{n+1}-1}{x-1}
+\end{align*}
+\end{theorem}
+
+\newpage
+\section*{Exercises}
+\subsection*{\textit{Warmup}}
+\begin{enumerate}[listparindent=0.7cm, align=left]
+\item Explain what the expression \begin{equation*}\sum^n_{i=0}a_i\end{equation*} means.
+\item Express the sum \begin{equation*}\sum^4_{k=1}a_k\end{equation*} in expanded sum notation.
+\item Expand the triple sum \begin{equation*}\sum_{1 \leq i < j < k \leq n}a_{ijk}\end{equation*} as an expression with three summations.
+\item Evaluate the following summations
+\begin{enumerate}[label=(\alph*), listparindent=0.7cm, align=left]
+    \item $\sum^3_{j=0}2^j$
+    \item $\sum^5_{k=1}(2k-3)$
+    \item $\sum^{100}_{j=1}j$
+    \item $\sum^{4}_{j=0}{\frac{24}{j!}}$
+    \item $\sum^{90}_{i=1}{(-2i^2+3j-5)}$
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{\textit{Homework}}
+\begin{enumerate}[listparindent=0.7cm, align=left]
+\item Solve the following recurrence using summation
+\begin{align*}
+    T_0&=5;\\
+    2T_n&=nT_{n-1}+3n!
+\end{align*}
+\item Find the closed-form expression for the following sums
+\begin{enumerate}[label=(\alph*), listparindent=0.7cm, align=left]
+\item $\sum^n_{i=1}(2k-1)$
+\item $\sum^n_{k=1}{i^{2x+1}}$
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{\textit{Challenge}}
+\begin{enumerate}[label=(\alph*), listparindent=0.7cm, align=left]
+\item Evaluate the sum $\sum^n_{k=1}(-1)^2k/(4k^2-1)$
+\end{enumerate}
+
 \end{document}
