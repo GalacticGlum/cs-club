@@ -48,10 +48,10 @@
     
     \vspace{4ex}
     \noindent
-    \begin{minipage}{0.65\linewidth}
+    \begin{minipage}{1\linewidth}
         \begin{flushleft}
             {\large \lineskip 0.5em \bfseries\scshape\sffamily\@author}
-            {\footnotesize\slshape\sffamily\hspace{5pt} \@date \par}
+            {\fontsize{9pt}{1em}\slshape\sffamily\hspace{5pt}\selectfont \@date \par}
         \end{flushleft}
     \end{minipage}
     \par
