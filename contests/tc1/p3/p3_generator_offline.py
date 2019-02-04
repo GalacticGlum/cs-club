@@ -31,13 +31,15 @@ def generate_testcase(length, is_balanced):
     return generate_phrase(length-1, is_balanced)
 
 def check_balanced(expr):
+    if expr.count('(') == expr.count(')') == expr.count('[') == expr.count(']') == expr.count('{') == expr.count('}') == 0: return True
+
     stack=[]
     for c in expr:
         if c == '(' or c == '[' or c == '{':
             stack.append(c)
             continue
         
-        if len(stack) == 0: return True
+        if len(stack) == 0: return False
         if c == ')':
             c = stack.pop()
             if c == '{' or c == '[': return False
