@@ -10,6 +10,7 @@ parser.add_argument('-api', '--apiurl', type=str, default='/api/contest/info/', 
 parser.add_argument('-rhtml', '--rankinghtmlurl', type=str, default='/contest/{0}/ranking', help='The URL for the ranking HTML; compatible with string formatting, "{0}" is the contest code.')
 parser.add_argument('-rname', '--rankingjsonname', type=str, default='rankings', help='The JSON field name for the rankings in the contest API JSON object.')
 parser.add_argument('-tlname', '--timelimitjsonname', type=str, default='time_limit', help='The JSON field name for the time limit in the contest API JSON object.')
+parser.add_argument('-s', '--scorescale', type=int, default=100, help='The score scale.')
 args = parser.parse_args()
 
 def get_contest_scores(contest_code):
@@ -54,6 +55,8 @@ for i in range(len(args.contests)):
 
 final_scores = {}
 for user in user_scores:
-    final_scores[user] = 100 * sum(args.weights[entry[0]] * entry[1] for entry in user_scores[user])
+    final_scores[user] = args.scorescale * sum(args.weights[entry[0]] * entry[1] for entry in user_scores[user])
 
 final_rankings = sorted(final_scores, key=final_scores.get, reverse=True)
+for i in range(len(final_rankings)):
+    print(f'{i+1}. {final_rankings[i]}: {round(final_scores[final_rankings[i]], 2)}')
