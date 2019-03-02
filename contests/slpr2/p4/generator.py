@@ -1,5 +1,6 @@
 from random import randint, random, choice, choices, sample
 from string import ascii_lowercase
+from math import floor
 
 def uniform_random_list(a, b, n):
     x = a
@@ -27,7 +28,11 @@ for i in range(1,test_cases+1):
         n,m = n_values[i-1],m_values[i-1]
         input_file.write(f'{n} {m}\n')
         
-        capacity = [randint(0, n) for i in range(4)]
+        capacity = []
+        for i in range(4):
+            c = randint(0, floor(n / randint(1, 10)))
+            capacity.append(c)
+
         capacity_str = ' '.join(str(i) for i in capacity)
         input_file.write(f'{capacity_str}\n')
 
@@ -42,20 +47,17 @@ for i in range(1,test_cases+1):
             input_file.write(f'{characters_str}\n')
             boxes.append([ord(c) - ord('A') for c in characters])
 
-        for i in range(n):
-            freq=[0]*4
-            for j in range(m):
-                freq[boxes[j][i]] += 1
-                
-            max_index=0
-            for j in range(4):
-                if freq[j]>freq[max_index] and capacity[j] > 0 or freq[j]>=freq[max_index] and capacity[max_index]==0 and capacity[j]>0:
-                    max_index=j
+        for student in range(n):
+            tally_ho = {0: 0, 1: 0, 2: 0, 3: 0}
+            for box in boxes:
+                tally_ho[box[student]] += 1
 
-            capacity[max_index]-=1
-            if capacity[max_index]<0:
+            tally_ho = {k:v for (k,v) in tally_ho.items() if capacity[k] > 0}
+            if len(tally_ho) == 0:
                 output_file.write('E\n')
             else:
-                answer = chr(ord('A') + max_index)
-                output_file.write(f'{answer}\n')
+                house = max(tally_ho, key=lambda k: (tally_ho[k], -k))
+                r = chr(house + ord("A"))
+                output_file.write(f'{r}\n')
+                capacity[house] -= 1
             
