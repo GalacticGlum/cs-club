@@ -105,8 +105,8 @@ def uniform_random_list(a, b, n):
 
 min_nm = int(input('Min N (and M): '))
 max_nm = int(input('Max N (and M): '))
-max_q = int(input('Max Q'))
-min_q = int(input('Min Q'))
+min_q = int(input('Min Q: '))
+max_q = int(input('Max Q: '))
 test_cases = int(input('Test case amount: '))
 test_case_prefix = input('Test case file prefix: ')
 
@@ -115,7 +115,7 @@ q_values = uniform_random_list(min_q,max_q+1,test_cases)
 for i in range(1,test_cases+1):
     with open(f'{test_case_prefix}.{i}.in','w+') as input_file:
         n = n_values[i-1]
-        q = q_values[i-1]
+        queries = q_values[i-1]
         m = random.randint(n-1, min(n*(n-1)/2,max_nm))      
         graph = generate_connected_graph(list(range(1,n+1)),m)
         edges=[]
@@ -124,8 +124,8 @@ for i in range(1,test_cases+1):
             c = random.randint(1,100)
             edges.append((p,q,c))
         
-        input_file.write(f'{n} {m} {q}\n'+'\n'.join(' '.join(str(j) for j in e) for e in edges)+'\n')
-        for i in range(q):
+        input_file.write(f'{n} {m} {queries}\n'+'\n'.join(' '.join(str(j) for j in e) for e in edges)+'\n')
+        for i in range(queries):
             a=random.randint(1,n)
             b=random.randint(1,n)
             if a==b:

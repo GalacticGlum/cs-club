@@ -13,9 +13,9 @@ int N, M, Q;
 int main()
 {
     ifstream file;
-    file.open("p7.1.10.in");
+    file.open("p7.2.20.in");
     ofstream ofile;
-    ofile.open("p7.1.10.out");
+    ofile.open("p7.2.20.out");
 
     memset(d, INF, sizeof(d));
 
