@@ -32,8 +32,12 @@ def get_contest_scores(contest_code):
         max_distance = (max_score**2 + max_cumtime**2)**0.5
 
         for ranking in rankings:
-            distance = ((ranking['points'] - max_score)**2 + (ranking['cumtime'] / 60)**2)**0.5
-            score = 1 - distance / max_distance
+            if ranking['points'] == 0:
+                score = 0
+            else:
+                distance = ((ranking['points'] - max_score)**2 + (0.5 * ranking['cumtime'] / 60)**2)**0.5
+                score = 1 - distance / max_distance
+
             scores[ranking['user']] = score
             
         return scores

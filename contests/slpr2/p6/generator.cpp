@@ -117,32 +117,29 @@ int main(int argc, char** argv)
     
     std::cout << n << "\n";
     
-    std::unordered_set<int> values;
-    std::set<int> p;
+    std::unordered_set<long long> values;
+    std::vector<long long> p;
 
-    int answer = 100000000000000000LL;
     for(int i = 0; i < n; ++i)
     {
-        int value = Random::Range(1, 1000000000);
-        if(values.find(value) != values.end())
+        long long value = Random::Range(1LL, 1000000000LL);
+        while(values.find(value) != values.end())
         {
-            i -= 1;
-            continue;
+            value = Random::Range(1LL, 1000000000LL);
         }
 
         values.insert(value);
+        p.push_back(value);
+        
         std::cout << value << " ";
-
-        auto j = p.upper_bound(value);
-        if (j != p.end())
-        {
-            auto d = *j - value;
-            answer = std::min(answer, d);
-        }
-
-        p.insert(value);
     }
     
+    std::sort(p.begin(), p.end());
+    long long answer = 100000000000000000LL;
+    for(int i = 0; i < n-1; ++i)
+    {
+        answer = std::min(answer, p[i+1]-p[i]);
+    }
 
     std::cout << "\n";
     std::cerr << answer << "\n";
