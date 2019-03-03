@@ -1,5 +1,6 @@
 import os
 import random
+import sys
 
 class Graph(object):
     def __init__(self, nodes, edges=None, loops=False, multigraph=False,
@@ -103,6 +104,16 @@ def uniform_random_list(a, b, n):
 
     return result
 
+def display_progress_bar(count, total, status=''):
+    bar_len = 60
+    filled_len = int(round(bar_len * count / float(total)))
+
+    percents = round(100.0 * count / float(total), 1)
+    bar = '=' * filled_len + '-' * (bar_len - filled_len)
+
+    sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
+    sys.stdout.flush()
+
 min_nm = int(input('Min N (and M): '))
 max_nm = int(input('Max N (and M): '))
 min_q = int(input('Min Q: '))
@@ -114,17 +125,27 @@ n_values = uniform_random_list(min_nm,max_nm+1,test_cases)
 q_values = uniform_random_list(min_q,max_q+1,test_cases)
 for i in range(1,test_cases+1):
     with open(f'{test_case_prefix}.{i}.in','w+') as input_file:
+        print(f'Generating test case {test_case_prefix}.{i}')
+
         n = n_values[i-1]
         queries = q_values[i-1]
         m = random.randint(n-1, min(n*(n-1)/2,max_nm))      
         graph = generate_connected_graph(list(range(1,n+1)),m)
         edges=[]
+
+        print('Generating graph...')
         for e in graph.edges:
             p,q = e
             c = random.randint(1,100)
             edges.append((p,q,c))
+
+            display_progress_bar(len(edges), len(graph.edges))
         
+        print()
+
         input_file.write(f'{n} {m} {queries}\n'+'\n'.join(' '.join(str(j) for j in e) for e in edges)+'\n')
+
+        print(f'Generating queries...')
         for i in range(queries):
             a=random.randint(1,n)
             b=random.randint(1,n)
@@ -135,6 +156,9 @@ for i in range(1,test_cases+1):
                     a+=1
                 
             input_file.write(f'{a} {b}\n')
+            display_progress_bar(i+1, queries, f'{i+1} / {queries}')
+
+        print()
 
         # solution = solve(n,m,edges)
 
