@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.sass": "scss",
+        "cmath": "cpp",
+        "vector": "cpp"
+    }
+}
