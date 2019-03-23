@@ -1,0 +1,43 @@
+\documentclass{cslessonsolutions}
+
+\lessonnum{2}
+\title{A Quick Overview of Summations}
+
+\begin{document}
+\maketitle
+\subsection*{\textit{Warmup}}
+\begin{enumerate}[listparindent=0.7cm, align=left]
+\item Explain what the expression $\sum^n_{i=0}a_i$ means.\\
+The expression means the sum of the terms $a_i$ where $i$ is from 0 to $n$.
+\item Express the sum \begin{equation*}\sum^4_{k=1}a_k\end{equation*} in expanded sum notation.
+\item Expand the triple sum \begin{equation*}\sum_{1 \leq i < j < k \leq n}a_{ijk}\end{equation*} as an expression with three summations.
+\item Evaluate the following summations
+\begin{enumerate}[label=(\alph*), listparindent=0.7cm, align=left]
+    \item $\sum^3_{j=0}2^j$
+    \item $\sum^5_{k=1}(2k-3)$
+    \item $\sum^{100}_{j=1}j$
+    \item $\sum^{4}_{j=0}{\frac{24}{j!}}$
+    \item $\sum^{90}_{i=1}{(-2i^2+3j-5)}$
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{\textit{Homework}}
+\begin{enumerate}[listparindent=0.7cm, align=left]
+\item Solve the following recurrence using summation
+\begin{align*}
+    T_0&=5;\\
+    2T_n&=nT_{n-1}+3n!
+\end{align*}
+\item Find the closed-form expression for the following sums
+\begin{enumerate}[label=(\alph*), listparindent=0.7cm, align=left]
+\item $\sum^n_{i=1}(2k-1)$
+\item $\sum^n_{k=1}{i^{2x+1}}$
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{\textit{Challenge}}
+\begin{enumerate}[label=(\alph*), listparindent=0.7cm, align=left]
+\item Evaluate the sum $\sum^n_{k=1}(-1)^2k/(4k^2-1)$
+\end{enumerate}
+
+\end{document}

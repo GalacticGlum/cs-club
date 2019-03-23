@@ -37,11 +37,12 @@
 
 % ************* Problem formatting helpers ****************
 
-\newcommand{\difficulty}[1]{\noindent\textbf{Difficulty}: #1\\[\baselineskip]}
-
 \newlength{\rulelength}
 \newcommand{\inputformat}{\vspace{\baselineskip}\par\noindent\textbf{Input Format}\\[0.2\baselineskip]}
-    
+\newcommand{\clarification}{\vspace{\baselineskip}\par\noindent\textbf{Clarification}\\[0.2\baselineskip]}
+
+\newcommand{\difficulty}[1]{\vspace{0.1\baselineskip}\par\noindent\textbf{Difficulty: #1}\\[0.2\baselineskip]}
+
 \newcommand{\constraints}{\vspace{\baselineskip}\par\noindent\textbf{Constraints}\\[0.2\baselineskip]}
 \newcommand{\outputformat}{\vspace{\baselineskip}\par\noindent\textbf{Output Format}\\[0.2\baselineskip]}
     
@@ -70,6 +71,12 @@
 
 \let\@motto\@empty
 \newcommand{\motto}[1]{\gdef\@motto{#1}}
+
+\let\@institute\@empty
+\newcommand{\institute}[1]{\gdef\@institute{#1}}
+
+\let\@organization\@empty
+\newcommand{\organization}[1]{\gdef\@organization{#1}}
 
 \renewcommand\maketitle{
     {\noindent\fontseries{b}\fontsize{24}{30}\selectfont\@title}\\[0.5\baselineskip]
