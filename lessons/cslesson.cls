@@ -2,6 +2,7 @@
 \ProvidesClass{cslesson}
 \LoadClass{article}
 
+\RequirePackage{enumitem}
 \RequirePackage[fleqn]{amsmath}
 % \RequirePackage[parfill]{parskip}
 \RequirePackage[T1]{fontenc}
