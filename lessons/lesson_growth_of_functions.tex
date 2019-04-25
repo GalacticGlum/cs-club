@@ -1,0 +1,93 @@
+\documentclass{cslesson}
+
+\numberwithin{equation}{section}
+
+\title{Growth of Functions}
+\author{SLSS Computer Science Club}
+\date{\today}
+
+\usepackage[noend]{algorithmic}
+\usepackage{algorithm, caption}
+\algsetup{indent=2em} 
+\renewcommand{\algorithmiccomment}[1]{\hspace{2em}// #1} 
+
+\usepackage{enumitem}
+
+\begin{document}
+\maketitle
+
+\section{Introduction to Algorithmic Analysis}
+Computer science is about the design, implementation, and \textit{analysis} of algorithms. Oftentimes, the algorithms we write are concerned with computing a set of values for a given set of input data. Sometimes, we will want to run this algorithm on a very large input data. In these cases, we need our algorithm to run \textit{very} fast. To do this, we need to not only understand the properties of our algorithm but also different optimisation techniques that we can use.
+
+Consider game developers or graphics programmers, who may concern themselves with framerate (that is, the time it takes for one frame to render); a database programmer may concern themselves with how long querying a database takes or the memory overhead of storing the database on a filesystem. In either scenario however, one thing remains true: our primary concern is with the performance of said algorithm---notably, \textit{speed} and \textit{memory}. More specifically, as programmers, we need to be able to gather reliable metrics describing the performance of our software. We refer to the speed performance as \textit{time complexity} and memory performance as \textit{space complexity}. But how can we actually gather these metrics? How can we accurately determine how long or how large (in terms of memory) an algorithm runs?
+
+\subsection{Running Time Analysis}
+
+We can analyse the running time of an algorithm by finding the number of primitive instructions that the algorithm takes. For simplicity, we say that each instruction in our pseudo-code runs at a constant time $c_i$, where $c_i$ represents the constant time that instruction $i$ takes. Thus, for some algorithm, the running time $R$ can be written as
+\begin{equation}
+    R=\sum^n_{k=1}I_k,
+\end{equation}
+where $I$ is the set of instructions pertaining to the pseudo-code.
+
+\begin{algorithm}[h]
+\caption*{\textsc{\textbf{Running time analysis of bubble sort}}}
+\begin{algorithmic} 
+\FOR{$0 \leq i < n$}
+\FOR{$0 \leq j < n$}
+\IF{$array[i] < array[j]$}
+\STATE{swap the value at $i$ with the value at $j$}
+\ENDIF
+\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+To compute the running time of bubble sort, we sum the costs of each primitive instruction by the times we execute the instruction, $nc_i$, where $n$ is the amount of times we run the instruction. In the case of bubble sort, we run the outer and inner \texttt{for} loops $n$ and $n^2$ times respectively (for our inner loop, we run $n$ times for each value $i$ from $0$ to $n-1$.
+\begin{equation*}
+    R=nc_1 + n^2c_2,
+\end{equation*}
+where $c_1$ and $c_2$ represent the constant runtime of the outer and inner\texttt{for} loops respectively.
+
+\subsection{Rate of Growth}
+In our analysis of bubble sort, we made many assumptions and compromises. Firstly, instead of representing the runtime of each instruction, we represented the runtime of some segment of instructions as a constant. While this isn't correct, it provides an abstract model which we can gauge our algorithmic complexity around. However, despite all our simplifications, expressing the runtime as a sum of constants is still cumbersome. Instead, we further abstract our analysis to include \textit{rate of growth} as a defining factor of an algorithms complexity. More specifically, we will express algorithmic complexity as a function of $n$ which describes how the algorithm grows for an input of $n$. This means that we will only consider the leading term of our expression (e.g. the leading term of $a^2 + b + c$ is $a^2$).
+
+\section{Big-$\mathcal{O}$ Notation}
+Big-$\mathcal{O}$ notation is an notation which is used to describe the performance or \textit{complexity} of an algorithm. In the previous section, we discussed how we can represent the runtime complexity of an algorithm by the way it grows for an input of $n$. This notation allows us to specifically describe the worst-case scenario and can be used to describe the worst-case execution time or space complexity of some algorithm. Big-$\mathcal{O}$ notation takes the general form of \begin{equation*}
+    \mathcal{O}(f(n))
+\end{equation*} where $f(n)$ is a function of $n$ which represents the rate of growth for the algorithm. It is the asymptotic upper-bound of an algorithm's complexity.
+
+\begin{definition}[Constant Complexity: $\mathcal{O}(1)$]
+Describes that an algorithm runs in a constant complexity; that is, the time or space complexity is the same regardless of the input size.
+\end{definition}
+
+\begin{definition}[Linear Complexity: $\mathcal{O}(n)$]
+Describes that an algorithm runs in a linear complexity; that is, the time or space complexity grows linearly proportional to the input size.
+\end{definition}
+
+\begin{definition}[Polynomial Complexity: $\mathcal{O}(n^k)$]
+Describes that an algorithm runs in a polynomial complexity; that is, the time or space complexity bound by a polynomial function of degree $k$, the input size (e.g. $n^2$).
+\end{definition}
+
+\begin{definition}[Exponential Complexity: $\mathcal{O}(k^n)$]
+Describes that an algorithm runs in an exponential time complexity (e.g. $2^n$).
+\end{definition}
+
+\begin{definition}[Logarithmic Complexity: $\mathcal{O}(\log{n})$]
+Describes that an algorithm runs in a logarithmic time complexity.
+\end{definition}
+
+\newpage
+\section*{Exercises}
+\begin{enumerate}[listparindent=0.7cm, align=left]
+\item A program prints out all the numbers from $0$ to $n$. What is the Big-$\mathcal{O}$ algorithmic complexity of this program?
+\item Sean Kermit writes a particle system. Though he has read a lot of articles on Stackoverflow, his implementation uses $T$ nested \texttt{for} loops. What is the Big-$\mathcal{O}$ time complexity of his particle system? 
+\item Binary search is a common algorithm for finding a value in a collection. The worst-case time complexity of binary search is $\mathcal{O}(\log{n})$. If Mr. Lane wants to sort $C$ classrooms, each with $n$ students, by intellect, what is the worst-case time complexity of the algorithm?
+\item A sorting method with Big-$\mathcal{O}$ complexity $O(n \log{n})$ spends exactly $1$
+millisecond to sort $1000$ data items. Assuming that time $T(n)$ of sorting
+$n$ items is directly proportional to $n \log{n}$, that is, $T(n) = cn \log{n}$, derive
+a formula for $T(n)$, given the time $T(N)$ for sorting $N$ items, and estimate
+how long this method will sort $1000000$ items.
+\item A twin prime is a prime number $k$ where $k+2$ or $k-2$ is also a prime number. Write a program to output all the prime numbers below $n$ and use an asterisk to indicate if the number is twin. \textbf{Challenge}: try to reduce your solution to the least amount of code. 
+\end{enumerate}
+
+\end{document}
