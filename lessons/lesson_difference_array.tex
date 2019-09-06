@@ -1,0 +1,240 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,fit,arrows}
+\graphicspath{ {./images/} }
+
+\lstset
+{
+    language=python,
+    breaklines=true,
+    basicstyle=\tt\scriptsize,
+    keywordstyle=\color{blue},
+    identifierstyle=\color{magenta},
+}
+
+\usetheme{Antibes}
+
+\usecolortheme{beaver}
+\usefonttheme[onlymath]{serif}
+
+\setbeamertemplate{navigation symbols}{}
+
+\title[Difference Arrays---Computer Science Club]{\textbf{Difference Arrays}}
+\institute{Stephen Lewis Secondary School \\[3ex] {\large Computer Science Club}}
+\date{April 26, 2019}
+
+\newcommand{\sectionFrame}[3]
+{
+    \section{#3}
+    \begin{frame}
+    \begin{block}{}
+    \begin{center}
+        \Huge{#1}\\[0.5ex]
+        \large{#2}
+    \end{center}
+    \end{block}
+    \end{frame}
+}
+
+\begin{document}
+
+\begin{frame} 
+\titlepage 
+\end{frame} 
+
+\section{Introduction}
+
+\begin{frame}{Problem}
+\begin{itemize}
+    \item You are given an empty array of size $n$ followed by $m$ updates.
+    \item An update consists of integers $i$, $j$ and $k$ ($i \leq j$), for which you are to increase every element from index $i$ to $j$, inclusive, by $k$.
+    \item At the end of the $m$ updates, you are to output the number of elements in the array with a value of exactly $x$.
+    \item What is the most optimal solution to this problem?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+    \begin{itemize}
+        \item $n = 5, m = 3, x = 6$
+        
+        \item Initial Array:
+        \begin{itemize}
+            \item $[0, 0, 0, 0, 0]$
+        \end{itemize}
+        
+        \item Updates:
+        \begin{itemize}
+            \item Update 1: $i = 2, j = 3, k = 5$
+            \begin{itemize}
+                \item $[0, 0, 0 + 5, 0 + 5, 0] = [0, 0, 5, 5, 0]$
+            \end{itemize}
+            
+            \item Update 2: $i = 0, j = 4, k = 1$
+            \begin{itemize}
+                \item $[0 + 1, 0 + 1, 5 + 1, 5 + 1, 0 + 1] = [1, 1, 6, 6, 1]$
+            \end{itemize}
+        
+            \item Update 3: $i = 3, j = 3, k = -6$
+            \begin{itemize}
+                \item $[1, 1, 6 - 6, 6, 1] = [1, 1, 0, 6, 1]$
+            \end{itemize}
+        \end{itemize}
+        
+        \item Solution:
+        \begin{itemize}
+            \item $1$ element in the array have a value of $x = 6$
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{Intuitive Solution}
+\begin{frame}[fragile]{Intuitive Solution}
+    \begin{itemize}
+        \item For each update, loop through the array from index $i$ to $j$, inclusive, increasing each element by $k$
+    \end{itemize}
+
+    \begin{lstlisting}
+        def update(i, j, k):
+            for index in range(i, j + 1):
+                array[index] += k
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item At the end, loop through the array and count the number of elements of a value of exactly $x$
+    \end{itemize}
+    
+    \begin{lstlisting}
+        def count():
+        
+            count = 0
+            for i in range(n):
+                if array[i] == x:
+                    count += 1
+            
+            return count
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Intuitive Solution - Time Complexity}
+\begin{itemize}
+    \item One Query $\mathcal{O}({n)}$
+    \item All Queries: $\mathcal{O}{(mn)}$
+    \item Count: $\mathcal{O}{(n)}$
+    \item Overall: $\mathcal{O}{(mn)}$
+\end{itemize}
+\end{frame}
+
+\section{Difference Array}
+\begin{frame}[fragile]{Difference Array}
+    \begin{itemize}
+        \item The difference array, \texttt{d}, of an array, \texttt{a}, is defined as \\ \texttt{d[i] = a[i] - a[i - 1]}
+        \item As such, elements in the array can be defined as \\ \texttt{a[i] = a[i - 1] + d[i]}
+        
+        \item For each update, the corresponding difference array can be updated via \texttt{d[i] += k} and \texttt{d[j + 1] -= k}
+    \end{itemize}
+    
+    \begin{lstlisting}
+        def update(i, j, k):
+            d[i] += k
+            d[j + 1] -= k
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item One Query: $\mathcal{O}{(1)}$
+        \item All Queries: $\mathcal{O}{(m)}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Difference Array}
+    \begin{itemize}
+        \item At the end of the $m$ updates, the array can be constructed via \texttt{a[i] = a[i - 1] + d[i]}
+        \item The base case is defined as \texttt{a[0] = d[0]}
+    \end{itemize}
+
+    \begin{lstlisting}
+        def count():
+            a[0] = d[0]
+            
+            for i in range(1, n):
+                a[i] = a[i - 1] + d[i]
+            
+            count = 0
+            for i in range(n);
+                if a[i] == x:
+                    count += 1
+            
+            return count
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item Count: $\mathcal{O}{(n)}$
+        \item Overall: $\mathcal{O}{(n + m)}$
+    \end{itemize}
+\end{frame}
+
+\section{2D Difference Array}
+\begin{frame}[fragile]{2D Difference Array}
+    \begin{itemize}
+        \item You are given an empty 2D of size $n$ by $m$ followed by $q$ updates.
+        \item An update consists of $x_1, y_1, x_2, y_2, k$ ($x_1 \leq x_2$ and $y_1 \leq y_2$), for which you are to increase every element contained in the rectangle ($P_1(x_1, y_1), P_2(x_2, y_2)$) by $k$.
+        \item At the end of the $q$ updates, you are to output the number of elements in the 2D array with a value of exactly $x$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{2D Difference Array}
+\begin{itemize}
+    \item The 2D difference array, \texttt{d}, of a 2D array, \texttt{a}, is defined as \texttt{d[i][j] = a[i][j] - a[i - 1][j] - a[i][j - 1] + a[i - 1][j - 1]}
+    \item As such, elements in the 2D array can be defined as \\ \texttt{a[i][j] = d[i][j] + a[i - 1][j] + a[i][j - 1] - a[i - 1][j - 1]}
+    \item For each update, the corresponding 2D difference array can be updated as follows
+\end{itemize}
+
+\begin{lstlisting}
+    def update(x1, y1, x2, y2, k):
+        d[x1][y1] += k
+        d[x2 + 1][y1] -= k
+        d[x1][y2 + 1] -= k
+        d[x2 + 1][y2 + 1] += k
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{2D Difference Array Implementation}
+\begin{lstlisting}
+    def update(x1, y1, x2, y2, k):
+        d[x1][y1] += k
+        d[x2 + 1][y1] -= k
+        d[x1][y2 + 1] -= k
+        d[x2 + 1][y2 + 1] += k
+    
+    def count():
+    
+        count = 0
+        for i in range(n):
+            for j in range(m):
+                a[i][j] = d[i][j]
+                
+                if i > 0: a[i][j] += a[i - 1][j]
+
+                if j > 0: a[i][j] += a[i][j - 1]
+                
+                if i > 0 and j > 0: a[i][j] -= a[i - 1][j - 1]
+        
+        return count
+\end{lstlisting}
+
+\end{frame}
+
+\section{Practice}
+\begin{frame}{Practice Problems}
+\begin{itemize}
+    \item Battle Positions \\ \url{https://dmoj.ca/problem/seed3}
+    \item SLPR 2 P5 - Class Balancing \url{https://ssoj.ca/problem/slpr2p5}
+    \item DMPG '15 S5 - Black and White  \url{https://dmoj.ca/problem/dmpg15s5}
+    \item USACO 2019 February Contest, Silver P2. Painting the Barn \url{http://www.usaco.org/index.php?page=viewproblem2&cpid=919}
+\end{itemize}
+
+
+\end{frame}
+
+\end{document}
