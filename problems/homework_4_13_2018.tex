@@ -1,0 +1,94 @@
+\documentclass{problem-set}
+
+\title{Challenge Problem Set}
+\subheader{SLSS Computer Science Club}
+\date{April 13, 2018}
+\author{Shon Verch}
+
+\begin{document}
+\maketitle
+
+\section{The Admissions Panel}
+At Ivy League University, the admissions panel consists of 
+7 highly-skilled mathematicians. In a goal to preserve the 
+mathematics culture of the university, the panel has devised 
+a process to assess the mathematical capabilities of applicants.
+
+Before the selection process begins, each applicant receives a set 
+$S = \{a_1,\;a_2,\;\ldots,\;a_n\}$ of $n $ integers. 
+
+At each iteration of the selection process, a random applicant is called 
+and is asked to select a non-empty subset from $S$ such that it 
+had not been selected by a previous applicant and that the sum of 
+the elements of the subset is even.
+
+The selection process ends when all possible subsets have been
+ selected by the applicants.
+
+Write a program to determine the total number of times applicants 
+can be called assuming each applicant gives the correct answer.
+
+\noindent
+\textbf{Note}
+\begin{enumerate}
+    \item Two subsets are different if there exists an element $a_k$ 
+    that exists in one subset but not in the other. For example, 
+    the set $\{2,\;3\}$ has $4$ subsets: $\{\}$, $\{2\}$, $\{3\}$, 
+    $\{2,\;3\}$.
+    \item Applicants can be called to select a subset multiple times.
+    \item If $a_i=a_j$---that is, if two elements in the set have 
+    the same value---choosing $a_i$ and choosing $a_j$ are considered 
+    two \textit{different} subsets.
+\end{enumerate}
+
+\inputformat
+The first of input contains an integer $n$ describing the size of set $S$.\\
+The next line of input contains $n$ space-separated integers describing an element of $S$.
+
+\constraints
+$1 \leq n \leq 10^5$\\
+$0 \leq a_i \leq 10^4$, where $i \in \interval{1}{n}$
+
+\outputformat
+Print the total number of times applicants are called.
+
+\pushnewpage
+
+\addsampleExplanation
+{
+4\\
+2 4 6 1
+}
+{
+7
+}
+{
+There are seven different ways which we can select the set such that the subset is not empty and has an even sum: $\{2\},\;\{4\},\;\{6\},\;\{2,\;4\},\;\{2,\;6\},\;\{4,\;6\},\;\{2,\;4,\;6\}$.
+}
+
+\addsampleExplanation{3\\1 2 2}{3}{There are 3 different ways in which we can select the set such that the subset is not empty and has an even sum: $\{2\},\;\{2\},\;\{2,\;2\}$.}
+
+\newpage
+\section{Yabba-Dabba Do!}
+In the town of Bedrock, Bamm-Bamm Rubble sees his neighbour, Pebbles Flintsone, playing an immensely popular game called \textit{Stepping Stones}. Bamm-Bamm is intrigued by the game and decides to play it.
+
+Square boxes have been carved into the ground, and a number is assigned to each block. Pebbles is standing in front of these blocks. From here, she will throw a stone 1 block far, move to that block; pick up the stone and then she will throw the stone two blocks far from her current position. Then she will move to that block; pick up the stone, and throw the stone three blocks from her current position. Then she will move to that block, and so on. The catch of the game is to check if it is possible to reach the $n$th block in this manner.
+
+However, Pebbles is lazy. She will only make if she is sure that she can reach the $n$th block. Write a program to determine whether Pebbles should make the move.
+
+\inputformat
+The first line of input contains an integer $T$ denoting the number of times Pebbles plays this game. Each of the next $T$ lines contains a single integer $n$ denoting the $n$th block.
+
+\constraints
+$1 \leq T \leq 10^5$\\
+$1 \leq n \leq 10^{18}$
+
+\outputformat
+The output consists of several lines as per the following criteria: if Pebbles is able to reach the $n$th block, then print \texttt{Keep going Pebbles!} with the number of moves required to reach the $n$th block, \textit{both separated by a space}. Otherwise, if Pebbles is unable to reach the $n$th block, then print \texttt{Unable to reach block}.
+
+\pushnewpage
+
+\addsampleExplanation{1\\2}{Unable to reach block.}{Pebbles can jump to the $1$st block. From here, she is allowed to make a move to the $3$rd block only. Therefore, sho cannot step onto the $2$nd block.}
+\addsampleExplanation{1\\3}{Keep going Pebbles! 2}{Pebbles can make a second move to reach the $3$rd block. Therefore, she can step on the $3$rd block in just 2 moves.}
+
+\end{document}

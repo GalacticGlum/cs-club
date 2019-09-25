@@ -1,0 +1,155 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,fit,arrows}
+\graphicspath{ {./images/} }
+
+\lstset
+{
+    language=python,
+    breaklines=true,
+    basicstyle=\tt\scriptsize,
+    keywordstyle=\color{blue},
+    identifierstyle=\color{magenta},
+}
+
+\usetheme{Antibes}
+
+\usecolortheme{beaver}
+\usefonttheme[onlymath]{serif}
+
+% \usecolortheme{crane}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+
+\title[Prefix Sum and Difference Arrays---Computer Science Club]{\textbf{Prefix Sum and Difference Arrays}}
+% \author{Shon Verch}
+\institute{Stephen Lewis Secondary School \\[3ex] {\large Computer Science Club}}
+\date{December 7, 2018}
+
+\newcommand{\sectionFrame}[3]
+{
+    \section{#3}
+    \begin{frame}
+    \begin{block}{}
+    \begin{center}
+        \Huge{#1}\\[0.5ex]
+        \large{#2}
+    \end{center}
+    \end{block}
+    \end{frame}
+}
+
+\begin{document}
+
+\begin{frame} 
+\titlepage 
+\end{frame} 
+
+\section{Prefix Sum Array}
+
+\begin{frame}{Problem}
+\begin{itemize}
+    \item You are given an array of $n$ number and $q$ queries.
+    \item A query consists of indices $i$ and $j$, for which you are to output the sum of the subarray from index $i$ to $j$, inclusive.
+    \item What is the most optimal solution to this problem?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+    \begin{itemize}
+        \item $n = 5, q = 3$
+        \item Array:
+        \begin{itemize}
+            \item $[-4, 2, 6, -1, 7]$
+        \end{itemize}
+        
+        \item Queries:
+        \begin{itemize}
+            \item Query 1: $i = 2, j = 4$
+            \begin{itemize}
+                \item Subarray: $[6, -1, 7]$
+                \item Sum: $6 - 1 + 7 = 12$
+            \end{itemize}
+            
+            \item Query 2: $i = 0, j = 3$
+            \begin{itemize}
+                \item Subarray: $[-4, 2, 6, -1]$
+                \item Sum: $-4 + 2 + 6 - 1 = 3$
+            \end{itemize}
+            
+            \item Query 2: $i = 3, j = 4$
+            \begin{itemize}
+                \item Subarray: $[-1, 7]$
+                \item Sum: $-1 + 7 = 6$
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Intuitive Solution}
+    \begin{lstlisting}
+        def get_subarray_sum(array, i, j):
+            total = 0
+            
+            for n in range(i, j + 1):
+                total += array[n]
+            
+            return total
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item Setup: $\mathcal{O}(1)$
+        \item One Query: $\mathcal{O}(n)$
+        \item All Queries: $\mathcal{O}(qn)$
+    \end{itemize}
+    
+    There needs to be a better way!
+\end{frame}
+
+\begin{frame}{Brief Explanation of Prefix Sum Array}
+    \begin{itemize}
+        \item Let $S(i, j)$ represent the subarray sum from $i$ to $j$ inclusive. \\
+        \item Let $a_n$ represent the $n$-th indexed element in the array
+    \end{itemize}
+    
+    As such, 
+    \begin{equation*}
+        S(i, j) = a_{i} + a_{i + 1} + \dots + a_{j - 1} + a_{j}
+    \end{equation*}
+    
+    
+\end{frame}
+
+\begin{frame}[fragile]{Prefix Sum Array Solution}
+    \begin{lstlisting}
+        def set_up_psa(array):
+            psa = []
+            
+            for i in range(len(array)):
+                if i == 0:
+                    psa.append(array[0])
+                else:
+                    psa.append(psa[i - 1] + array[i])
+        
+            return psa
+        
+        def get_subarray_sum(psa, i, j):
+            if i == 0:
+                return psa[j] - psa[i - 1]
+            else:
+                return psa[j]
+        
+            return psa[j] - psa[i]
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item Setup: $\mathcal{O}(n)$
+        \item One Query: $\mathcal{O}(1)$
+        \item All Queries: $\mathcal{O}(q + n)$
+    \end{itemize}
+\end{frame}
+
+\end{document}
+

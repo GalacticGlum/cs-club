@@ -1,0 +1,26 @@
+\documentclass{contest-set}
+
+\title{Holiday Contest}
+\motto{``The proof is trivial, and is left as an exercise.''}
+\subheader{SLSS Computer Science Club}
+\date{December 14, 2018}
+\institute{Stephen Lewis Secondary School}
+\organization{Computer Science Club}
+
+\begin{document}
+\maketitle
+
+\section{Communist Poker Game}
+The committee organising a holiday poker game has decided that in order to promote equity and diversity, the poker game will run under communist rules.
+
+At the end of the game, the committee wants to balance the payout of each player by minimising debt; that is, they want to get all players out of debt. They will do this by connecting the players into a network and then moving money from player to player by a sequence of moves until everyone is out of debt. A move consists of selecting a player $p$ and then moving one dollar across each edge adjacent to $p$. 
+
+Given a network of players, determine the minimum number of moves needed to get all players out of debt.
+
+\inputformat
+The first line of input contains two space-separated integers $n$ and $k$ describing the number of players and the number of connections respectively. The next $n$ lines contain a single space-separated integer describing the amount of money that the $i$-th player ($1 \leq i \leq n$) has. The next $k$ lines contain two space-separated integers $i$ and $j$ denoting that player $i$ is connected to $j$ in the network.
+
+\outputformat
+The output consists of a single space-separated integer denoting the minimum number of moves that are needed to balance the network. If it is impossible, output $-1$.
+
+\end{document}

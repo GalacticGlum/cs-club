@@ -1,0 +1,27 @@
+\documentclass{problem-set}
+
+\title{Combinatorics Problems}
+\subheader{SLSS Computer Science Club}
+\date{TBD}
+\author{Shon Verch}
+
+\begin{document}
+\maketitle
+
+\section{Reaching the $n$-th Stair}
+There are $n$ stairs. A person standing at the bottom wants to reach the top. The person can climb either $1$ stair or $2$ stairs at a time.
+Determine the number of ways, the person can reach the top.
+
+\inputformat
+The input consists of a single line containing a non-negative integer describing the number of stairs on the staircase.
+
+\outputformat
+Print the number of ways, the person can reach the top of the staircase.
+
+\addsampleExplanation{1}{1}{There is only one way to climb 1 stair.}
+
+\pushnewpage
+\addsampleExplanation{2}{2}{There are two ways: $(1,\;1)$ and $(2)$.}
+\addsampleExplanation{4}{5}{$(1,\;1,\;1,\;1)$, $(1,\;1,\;2)$, $(2,\;1,\;1)$, $(1,\;2,\;1)$, $(2,\;2)$.}
+
+\end{document}
