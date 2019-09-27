@@ -1,0 +1,103 @@
+\documentclass{problem-set}
+
+\title{Problem Set}
+\subheader{ECOO 2019}
+\date{March 22, 2019}
+
+\begin{document}
+\maketitle
+
+\section{Free Shirts}
+Throughout the year, there are many programming events that students can attend to meet like-minded individuals, hone their skills, and most importantly, get a free t-shirt.
+
+Ian is an avid attender of these events because he hates doing laundry. Ian only does his laundry when all his shirts are dirty, so this constant influx of shirts allows him to put off laundry, which makes all his shirts clean again. If Ian goes to an event, then he will receive on clean shirt.
+
+Ian starts with $N$ clean shirts. Ian wears one clean shirt every day, after which it becomes dirty. If at the beginning of a day (before any events) Ian only has dirty shirts, then he will do the laundry, which makes all his shirts clean again. If Ian goes to an event, then he will receive one clean shirt.
+
+Given the initial number of shirts that Ian has and the schedule of events for the next $D$ days, how many times will Ian do the laundry in the next $D$ days.
+
+\inputformat
+\texttt{DATA11.txt} (\texttt{DATA12.txt} for the second try) will contain $10$ datasets. Each dataset begins with three integers $N$, $M$, and $D$ $(1 \leq N, M \leq 100, 1 \leq D \leq 1\;000)$, the initial number of shirts that Ian has, the number of events coming up, and the number of days, respectively.
+
+The next line contains $M$ integers $A_i$ $1 \leq A_i \leq D$, the days on which there are events. There may be multiple events in a single day.
+
+\outputformat
+For each dataset, output the number of times that Ian will do the laundry in the next $D$ days.
+\pushnewpage
+\addsampleExplanation
+{
+1 1 10\\
+10\
+}
+{9}{Ian does the laundry on days $2$, $3$, $4$, $5$, $6$, $7$, $8$, $9$, $10$.}
+
+\addsampleExplanation
+{
+1 3 10\\
+2 9 5
+}{3}{Ian does the laundry on days $2$, $4$, $7$.}
+
+\newpage
+\section{L-Systems Go}
+A Lindenmayer system (L-sysem) is a parallel rewriting system and a type of formal grammar. Some uses of L-systems include creating visual representations of vegetation, flowers, trees, and grasses.
+
+An L-system consists of an axiom and a set of rules.
+\begin{itemize}
+    \item The axiom ($A$) is a string that represents the starting state of the L-system.
+    \item The set of rules defines what happens to each letter in an iteration of the system.
+\end{itemize}
+
+Given the axiom, set of rules, and the number of iterations for which to run the system, you are tasked with generating a two-letter code followed by the length of the final state. The two-letter code will be the concatenation of the first letter and the last letter of the final state.
+
+\inputformat
+\texttt{DATA21.txt} (\texttt{DATA22.txt} for the second try) will contain $10$ datasets. Each dataset begins with three terms $R$, $T$, and $A$ $(1 \leq R \leq 26, 1 \leq T \leq 30, 1 \leq |A| \leq 5)$, the number of rules, the number of iterations, and the axiom. The next $R$ lines each contain a character $C$ followed by a string $S$ $(1 \leq |S| \leq 3)$ which represents a rule stating that each occurrence of $C$ should be replaced with the string $S$. It is guaranteed that each letter in the system will have a corresponding rule.
+
+For the first $4$ cases, $T \leq 5$.
+For the first $7$ cases, $T \leq 12$.
+
+\outputformat
+For each dataset, output a concatenation of the first and last letter of the state and the length of the state after $T$ iterations.
+\pushnewpage
+\addsampleExplanation{3 5 AC\\A CAB\\B CB\\C ACB}{CB 288}{The first iteration is \texttt{AC} $\rightarrow$ \texttt{CABACB}.}
+
+\addsampleExplanation{4 5 AD\\A AC\\B ACA\\C BD\\D B}{AB 60}{The first two iterations are \texttt{AD} $\rightarrow$ \texttt{ACB} $\rightarrow$ \texttt{ACBDACA}.}
+
+\newpage
+\section{Side Scrolling Simulator}
+Marr E.O. is currently working on his next video game. His is creating a side-scrolling game and wants you to ensure that the levels that he is creating are possible to complete.
+
+The character in the game, Loo E.G., can only jump a certain height $(J)$. Throughout the game there are walls with openings creating in them for Loo E.G. to jump through. Loo E.G. can go through these openings as follows: he first jumps vertically up to $J$ spaces, then he moves two spaces horizontally through the opening, and finally falls vertically on the other side of the wall.
+
+Marr E.O. thinks he created the walls such that it is possible for Loo E.G. to complete the level but he wants you to check. Marr E.O. provides his levels in a text format, where each symbol has a meaning:
+\begin{itemize}
+    \item A dot \texttt{`.'} means there is nothing there, and Loo E.G. can move freely through that space.
+    \item A hash \texttt{`\#'} represents the ground (last row of the input).
+    \item An at-symbol \texttt{`@'} represents the wall, which cannot be passed through or stood upon.
+    \item The letters \texttt{`L'} and \texttt{`G'} represent where Loo E.G. start and end respectively. The start point is guaranteed to be left of the end point. Both points are guaranteed one space above the ground.
+\end{itemize}
+
+\inputformat
+\texttt{DATA31.txt} (\texttt{DATA32.txt} for the second try) will contain $10$ datasets. Each dataset begins with a line containing three integers $J$, $W$, and $H$ $(1 \leq J \leq 10, 5 \leq W \leq 100, 2 \leq H \leq 10)$, representing the jump height of Loo E.G. and the width and height of the level. $H$ lines follow, each containing $W$ ASCII characters representing the level (as shown above).
+
+\outputformat
+For each dataset, output \texttt{`CLEAR'} if Loo E.G. is able to complete the level, or a single integer $N$ that represents the first column that Loo E.G. is unable to reach.
+
+\pushnewpage
+\addsample{
+2 10 5\\
+..........\\
+.......@..\\
+.......@..\\
+L......@.G\\
+\#\#\#\#\#\#\#\#\#\#}{8}
+
+\addsample{
+1 10 5\\
+..........\\
+..@..@@...\\
+..@.......\\
+L.....@..G\\
+\#\#\#\#\#\#\#\#\#\#
+}{CLEAR}
+
+\end{document}

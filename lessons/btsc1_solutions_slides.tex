@@ -1,0 +1,319 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{mathtools}
+\usepackage{breqn}
+\usetikzlibrary{positioning,shapes,fit,arrows}
+\graphicspath{ {./images/} }
+
+\usepackage{xcolor}
+\definecolor{maroon}{cmyk}{0, 0.87, 0.68, 0.32}
+\definecolor{halfgray}{gray}{0.55}
+\definecolor{ipython_frame}{RGB}{207, 207, 207}
+\definecolor{ipython_bg}{RGB}{247, 247, 247}
+\definecolor{ipython_red}{RGB}{186, 33, 33}
+\definecolor{ipython_green}{RGB}{0, 128, 0}
+\definecolor{ipython_cyan}{RGB}{64, 128, 128}
+\definecolor{ipython_purple}{RGB}{170, 34, 255}
+
+\usepackage{listings}
+\lstset{
+    breaklines=true,
+    %
+    extendedchars=true,
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+
+\usepackage{animate}
+
+%%
+%% Python definition (c) 1998 Michael Weber
+%% Additional definitions (2013) Alexis Dimitriadis
+%% modified by me (should not have empty lines)
+%%
+\lstdefinelanguage{iPython}{
+    morekeywords={access,and,break,class,continue,def,del,elif,else,except,exec,finally,for,from,global,if,import,in,is,lambda,not,or,pass,print,raise,return,try,while},%
+    %
+    % Built-ins
+    morekeywords=[2]{abs,all,any,basestring,bin,bool,bytearray,callable,chr,classmethod,cmp,compile,complex,delattr,dict,dir,divmod,enumerate,eval,execfile,file,filter,float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,long,map,max,memoryview,min,next,object,oct,open,ord,pow,property,range,raw_input,reduce,reload,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,vars,xrange,zip,apply,buffer,coerce,intern},%
+    %
+    sensitive=true,%
+    morecomment=[l]\#,%
+    morestring=[b]',%
+    morestring=[b]",%
+    %
+    morestring=[s]{'''}{'''},% used for documentation text (mulitiline strings)
+    morestring=[s]{"""}{"""},% added by Philipp Matthias Hahn
+    %
+    morestring=[s]{r'}{'},% `raw' strings
+    morestring=[s]{r"}{"},%
+    morestring=[s]{r'''}{'''},%
+    morestring=[s]{r"""}{"""},%
+    morestring=[s]{u'}{'},% unicode strings
+    morestring=[s]{u"}{"},%
+    morestring=[s]{u'''}{'''},%
+    morestring=[s]{u"""}{"""},%
+    %
+    % {replace}{replacement}{lenght of replace}
+    % *{-}{-}{1} will not replace in comments and so on
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+    %
+    {^}{{{\color{ipython_purple}\^{}}}}1
+    {=}{{{\color{ipython_purple}=}}}1
+    %
+    {+}{{{\color{ipython_purple}+}}}1
+    {*}{{{\color{ipython_purple}$^\ast$}}}1
+    {/}{{{\color{ipython_purple}/}}}1
+    %
+    {+=}{{{+=}}}1
+    {-=}{{{-=}}}1
+    {*=}{{{$^\ast$=}}}1
+    {/=}{{{/=}}}1,
+    literate=
+    *{-}{{{\color{ipython_purple}-}}}1
+     {?}{{{\color{ipython_purple}?}}}1,
+    %
+    identifierstyle=\color{black}\ttfamily,
+    commentstyle=\color{ipython_cyan}\ttfamily,
+    stringstyle=\color{ipython_red}\ttfamily,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    %
+    rulecolor=\color{ipython_frame},
+    frame=single,
+    frameround={t}{t}{t}{t},
+    framexleftmargin=6mm,
+    numbers=left,
+    numberstyle=\tiny\color{halfgray},
+    %
+    %
+    backgroundcolor=\color{ipython_bg},
+    %   extendedchars=true,
+    basicstyle=\scriptsize,
+    keywordstyle=\color{ipython_green}\ttfamily,
+}
+
+% \definecolor{light-gray}{gray}{0.95}
+\surroundwithmdframed[
+  hidealllines=true,
+  innerleftmargin=15pt,
+  innertopmargin=0pt,
+  innerbottommargin=0pt]{lstlisting}
+
+\usetheme{Berlin}
+\usefonttheme[onlymath]{serif}
+
+% \usecolortheme{crane}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+
+\title{Back to School Contest '19}
+\subtitle{Problem Solutions}
+\institute{Stephen Lewis Secondary School}
+\author{Computer Science Club}
+\date{September 25, 2019}
+
+\setbeamertemplate{frametitle continuation}[from second][(contd.)]
+
+\newcommand{\sectionFrame}[3]
+{
+    \section{#3}
+    \begin{frame}
+    \begin{block}{}
+    \begin{center}
+        \Huge{#1}\\[0.5ex]
+        \large{#2}
+    \end{center}
+    \end{block}
+    \end{frame}
+}
+
+\usepackage{caption}
+\DeclareMathOperator{\MCE}{MCE}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+\begin{document}
+\begin{frame} 
+\titlepage 
+\end{frame}
+
+\section{``A Coin Game''}
+\subsection{Overview}
+\begin{frame}{Problem Description}
+    \only<1-2>{Jack and Jill are playing a game with $N$ stacks of coins, where the $i$-th stack contains $C_i$ coins ($1 \leq i \leq N$).
+    \begin{itemize}
+        \item The pair take turns eliminating a stack of their choice until all remaining stacks have the same number of coins.
+        \item At this point, since the next player cannot go, the current player is declared the winner.
+    \end{itemize}}
+    
+    \only<2>{If both Jack and Jill play \textit{optimally}, Jill wants to know whether she should go first or second in order to win the game.}
+\end{frame}
+
+\begin{frame}{Optimality}
+    Playing optimally refers to the fact that the players will take the minimum number of moves required \textit{regardless} of whether it is advantageous to the current player.
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+    \only<1-2>{Suppose there are four stacks of coins: $7$, $3$, $2$, and $2$. Should Jill go first or second, and how many turns will it take for Jill to win?}
+    \only<2>{\begin{block}{Solution}
+        Jill should go second since Jack will remove stack 1 or 2 and then Jill will remove the remaining stack leaving the two stacks with 2 coins each.\\~\\This will take a total of $2$ turns.
+    \end{block}}
+\end{frame}
+
+\subsection{Determining the length of the game}
+\begin{frame}[fragile]{Prelude}
+    Recall that since Jack and Jill play optimally, the game will last for the \textit{minimum number of moves} required to win.\\~\\
+    So, to find the length of the game, we need to find minimum number of moves required to win.
+\end{frame}
+
+\begin{frame}{Rephrasing the problem}
+    Each player's turn corresponds to the elimination of an arbitrary stack. In other words, if we have an array of numbers, $A$, we are removing an element from $A$ every turn.\\~\\
+    If $M$ represents the number of elements that we have to remove such that \textit{all} elements in $A$ have the same value, the minimum value of $M$, $M_{\min}$ represents the minimum number of moves to win our game.
+\end{frame}
+
+\begin{frame}[fragile]{How do we find $M_{\min}$?}
+    If we write $M$ as $$M=|A|-n,$$ where $n$ represents the number of common elements to keep, then it is clear that $M_{\min}$ is minimised when $n$ is maximised.\\~\\
+    In other words, $M_{\min}$ is found by finding the \textit{most common element} in $A$.
+\end{frame}
+
+\begin{frame}{Finding the most common element}
+    Suppose that ${\MCE}(A)$ represents the \textit{most common element} of $A$.\\~\\
+    Let's take a look at how we can compute the value of $\MCE(A)$.
+\end{frame}
+
+\subsection{Side note: Key-Value Mapping Data Structure (Dictionary)}
+\begin{frame}{What is a dictionary?}
+    Imagine a table mapping some value $k$ to another value $v$:
+    \begin{figure}
+        \centering
+        \begin{tabular}{c|c}
+            Key ($k$) & Value ($v$)  \\\hline
+            1 & 6 \\
+            ``string'' & 7\\
+            $\pi$ & \{1, 5\}\\
+            Dog & Animal
+        \end{tabular}
+        \caption{A key-value table.}
+    \end{figure}
+    A dictionary emulates the table above; it maps an object of any type to another object of any type.
+\end{frame}
+
+\begin{frame}[fragile]{Dictionaries in Python}
+    \textbf{NOTE:} The keys of a dictionary \textit{must} be distinct. Otherwise, there is an ambiguity.
+    \begin{center}
+    \begin{lstlisting}[language=iPython]
+# Initialise an dictionary
+A = {1: 2} # You can also use the dict() function...
+# Add a new value to the dictionary
+A[7] = 3 
+# NOTE: If the key is already in the dictionary,
+#       it will overwrite the value.
+A[1] = 3 # e.g. this will overwrite the value at 1 to be 3. 
+    \end{lstlisting}
+    \end{center}
+\end{frame}
+
+\subsection{Frequency counting}
+\begin{frame}{Counting frequency using a dictionary}
+    We can emulate the frequency table that we manually made using a dictionary.\\~\\
+    The key denotes an element of $A$, $x$, and the value denotes the frequency of $x$ in $A$, $f_A(x)$.
+\end{frame}
+
+\subsection{Summary}
+\begin{frame}{The minimum number of turns is...}
+    Based on our findings, we can express $M_{\min}$ as $$M_{\min}=|A|-f_A\left({\MCE}(A)\right).$$
+    In other words, $M_{\min}$ is the number of elements that we need to remove so that our array solely consists of the most common element.
+\end{frame}
+
+\begin{frame}{To go first or second?}
+    Whether Jill should go first or second is directly based on the parity of $M_{\min}$.\\~\\
+    If Jill goes first, all \textit{odd-numbered} turns `belong' to her. As a result, if $M_{\min}$ is odd, her turn will coincide with $M_{\min}$.\\~\\
+    In the same way, if Jill goes second, all \textit{even-numbered} turns `belong' to her and as a result, if $M_{\min}$ is even, her turn will coincide with $M_{\min}$.
+\end{frame}
+
+\section{``Walter's Series''}
+\subsection{Overview}
+\begin{frame}{Problem Description}
+    Walter came up with a square series he calls the ``cool'' series. The $n$-th term of which is given by
+    $$C_n=n^2-(n-1)^2.$$
+    Walter wants to know the finite sum of this series: $$S_n=C_1+C_2+\ldots+C_n,$$
+    and he needs \textit{your} help. For $T$ test cases, help Walter find $S_n$ modulo $10^9+7$.
+\end{frame}
+
+\begin{frame}{Two Approaches}
+    There are two approaches to solving this problem. Both of them involve simplify $S_n$ (i.e. finding a closed-form expression).
+\end{frame}
+
+\begin{frame}{Method \rom{1}: Summation}
+    Simplify $C_n$ gives us $C_n=2n-1$. Then, we can write $S_n$ as
+    \begin{align*}
+        S_n&=C_1+C_2+\ldots+C_n\\
+        &=2(1)-1+2(2)-1+\ldots+2(n-1)-1+2n-1\\
+        \shortintertext{We can group up the $-1$ terms that appear in each of the $n$ terms.}
+        &=2(1)+2(2)+\ldots+2(n-1)+2n-n\\
+        &=2(1+2+\ldots+(n-1)+n)-n\\
+        &=2\left(\frac{n(n+1)}{2}\right)-n\\
+        &=n(n+1)-n\\
+        \Aboxed{&=n^2}
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Method \rom{2}: Telescoping series}
+    We start by writing $S_n$ in expanded form as
+    \begin{dmath}
+        S_n=\left(1^2-0^2\right)+\left(2^2-1^2\right)+\left(3^2-2^2\right)+\ldots+\left((n-1)^2-(n-2)^2\right)+\left(n^2-(n-1)^2\right).
+    \end{dmath}
+    Notice that each successive term cancels out the one before it leaving us with $$S_n=n^2.$$
+\end{frame}
+
+\section{``Substitution''}
+\subsection{Overview}
+\begin{frame}{Problem Description}
+    Nathan likes to play a little game called \textit{Substitutions}. From a root string $R$ and a valid string $S$, the game works by repeatedly splitting the string $S$ into two substrings $A$ and $B$ such that $A+B=S$; the new string $A+R+B$ is also considered valid.\\~\\
+    Help Nathan determine whether a given string $S$ is valid for a root string $R.$
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Example}
+    For $R=\text{\texttt{``frA''}}$ and $S=\text{\texttt{``frfrAfrA''}},$ determine whether $S$ is valid.
+    \begin{block}{Proof.}
+    Assume that $S$ is valid. Then, $S$ can be made by inserting $R$ into some position of another string $X$ (i.e. $S=A+R+B$ where $A$ and $B$ are substrings of $X$). Therefore, $X$ is \texttt{``frfrA``}.
+    \end{block}
+    \framebreak
+    \begin{block}{Proof. (contd.)}
+    Likewise, $X$ is valid since $S$ was made from $X$. We repeat the process above to find another string $Y=\texttt{``fr``}$ where $X=C+R+D$ where $C$ and $D$ are substrings of $Y$.\\~\\
+    Once again, since $X$ can be made from $Y$, and $X$ is valid, $Y$ must also be valid; however, $Y$ does \textit{not} contain $R$. Therefore, $Y$ is \textit{not} valid; we have reached a contradiction which means that our original string $S$ is also not valid.
+    \end{block}
+\end{frame}
+
+\begin{frame}{An important observation}
+    If $S$ is valid, We find that as we backtrack from $S$, every successive string ($X$, $Y$, $Z$, \ldots) will contain the root string $R$. At some point, we will reach $R$ itself.\\~\\
+    If $S$ is \textit{not} valid however, we will reach a string that does \textit{not} contain $R$.\\~\\
+    This property lets us determine whether $S$ is valid.
+\end{frame}
+\end{document}
