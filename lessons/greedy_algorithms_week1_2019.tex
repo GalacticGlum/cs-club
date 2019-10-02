@@ -1,0 +1,214 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{mathtools}
+\usepackage{breqn}
+\usetikzlibrary{positioning,shapes,fit,arrows}
+\graphicspath{ {./images/} }
+
+\usepackage{xcolor}
+\definecolor{maroon}{cmyk}{0, 0.87, 0.68, 0.32}
+\definecolor{halfgray}{gray}{0.55}
+\definecolor{ipython_frame}{RGB}{207, 207, 207}
+\definecolor{ipython_bg}{RGB}{247, 247, 247}
+\definecolor{ipython_red}{RGB}{186, 33, 33}
+\definecolor{ipython_green}{RGB}{0, 128, 0}
+\definecolor{ipython_cyan}{RGB}{64, 128, 128}
+\definecolor{ipython_purple}{RGB}{170, 34, 255}
+
+\usepackage{listings}
+\lstset{
+    breaklines=true,
+    %
+    extendedchars=true,
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+
+\usepackage{animate}
+
+%%
+%% Python definition (c) 1998 Michael Weber
+%% Additional definitions (2013) Alexis Dimitriadis
+%% modified by me (should not have empty lines)
+%%
+\lstdefinelanguage{iPython}{
+    morekeywords={access,and,break,class,continue,def,del,elif,else,except,exec,finally,for,from,global,if,import,in,is,lambda,not,or,pass,print,raise,return,try,while},%
+    %
+    % Built-ins
+    morekeywords=[2]{abs,all,any,basestring,bin,bool,bytearray,callable,chr,classmethod,cmp,compile,complex,delattr,dict,dir,divmod,enumerate,eval,execfile,file,filter,float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,long,map,max,memoryview,min,next,object,oct,open,ord,pow,property,range,raw_input,reduce,reload,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,vars,xrange,zip,apply,buffer,coerce,intern},%
+    %
+    sensitive=true,%
+    morecomment=[l]\#,%
+    morestring=[b]',%
+    morestring=[b]",%
+    %
+    morestring=[s]{'''}{'''},% used for documentation text (mulitiline strings)
+    morestring=[s]{"""}{"""},% added by Philipp Matthias Hahn
+    %
+    morestring=[s]{r'}{'},% `raw' strings
+    morestring=[s]{r"}{"},%
+    morestring=[s]{r'''}{'''},%
+    morestring=[s]{r"""}{"""},%
+    morestring=[s]{u'}{'},% unicode strings
+    morestring=[s]{u"}{"},%
+    morestring=[s]{u'''}{'''},%
+    morestring=[s]{u"""}{"""},%
+    %
+    % {replace}{replacement}{lenght of replace}
+    % *{-}{-}{1} will not replace in comments and so on
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+    %
+    {^}{{{\color{ipython_purple}\^{}}}}1
+    {=}{{{\color{ipython_purple}=}}}1
+    %
+    {+}{{{\color{ipython_purple}+}}}1
+    {*}{{{\color{ipython_purple}$^\ast$}}}1
+    {/}{{{\color{ipython_purple}/}}}1
+    %
+    {+=}{{{+=}}}1
+    {-=}{{{-=}}}1
+    {*=}{{{$^\ast$=}}}1
+    {/=}{{{/=}}}1,
+    literate=
+    *{-}{{{\color{ipython_purple}-}}}1
+     {?}{{{\color{ipython_purple}?}}}1,
+    %
+    identifierstyle=\color{black}\ttfamily,
+    commentstyle=\color{ipython_cyan}\ttfamily,
+    stringstyle=\color{ipython_red}\ttfamily,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    %
+    rulecolor=\color{ipython_frame},
+    frame=single,
+    frameround={t}{t}{t}{t},
+    framexleftmargin=6mm,
+    numbers=left,
+    numberstyle=\tiny\color{halfgray},
+    %
+    %
+    backgroundcolor=\color{ipython_bg},
+    %   extendedchars=true,
+    basicstyle=\scriptsize,
+    keywordstyle=\color{ipython_green}\ttfamily,
+}
+
+% \definecolor{light-gray}{gray}{0.95}
+\surroundwithmdframed[
+  hidealllines=true,
+  innerleftmargin=15pt,
+  innertopmargin=0pt,
+  innerbottommargin=0pt]{lstlisting}
+
+\usetheme{Berlin}
+\usefonttheme[onlymath]{serif}
+
+% \usecolortheme{crane}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+
+\title{Greedy Algorithms}
+\subtitle{An introduction by example}
+\institute{Stephen Lewis Secondary School}
+\author{Computer Science Club}
+\date{October 2, 2019}
+
+\setbeamertemplate{frametitle continuation}[from second][(contd.)]
+
+\newcommand{\sectionFrame}[3]
+{
+    \section{#3}
+    \begin{frame}
+    \begin{block}{}
+    \begin{center}
+        \Huge{#1}\\[0.5ex]
+        \large{#2}
+    \end{center}
+    \end{block}
+    \end{frame}
+}
+
+\usepackage{caption}
+\DeclareMathOperator{\MCE}{MCE}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+\begin{document}
+\begin{frame} 
+\titlepage 
+\end{frame}
+
+\section{Introduction}
+\subsection{Problem}
+\begin{frame}{Problem Description}
+    You are an engineer at Google at you have $T$ minutes until your presentation. You still have $N$ tasks to complete and you want to complete the \textit{maximum} number of tasks.\\~\\
+    
+    Given the time that it takes to complete each of the $N$ tasks, $A_1, A_2, \ldots, A_N$, where $A_i$ represents the minutes it takes to complete task $i$, determine the maximum number of tasks you can complete.
+\end{frame}
+
+\begin{frame}{Na\"{i}ve Solution}
+Let $\mathcal{P}$ represents the set of all ways to complete some tasks in at most $T$ minutes: $\mathcal{P}=\left\{A, B, C, \ldots\right\}$ where $A, B, C, \ldots, $ represent a possible way of completing some tasks in at most $T$ minutes.\\~\\
+
+The maximum number of tasks that we can complete in $T$ minutes is therefore the largest set in $\mathcal{P}$.
+\begin{block}{\textit{Analysis}. Time Complexity}
+For $n$ tasks, there are $2^n-1$ possible ways of choosing $1$ or more tasks (i.e. non-zero subsets).\\~\\At worst case, we will have to check all of these subsets giving us a worst-case complexity of $\mathcal{O}\left(2^n\right).$
+\end{block}
+\end{frame}
+
+\begin{frame}{How do we do better? Rephrasing the problem}
+    Suppose that you want to find the maximum number of elements, $M$, in array $A$ such that their sum does not exceed $n$.
+    \begin{block}{Example 1}
+        Find the value of $M$ if $A=\{6,3,1,9,-2,5,7,10\}$ and $n=5$.
+    \end{block}
+    \begin{block}{Example 2}
+        Find the value of $M$ if $A=\{-2,5,7,12,13,19,31\}$ and $n=25$.
+    \end{block}
+    Which example problem was easier to compute?
+\end{frame}
+
+\begin{frame}{Sorted data $\rightarrow$ easy solution}
+    When we sorted array $A$, we were able to solve the problem much quicker.\\~\\
+    
+    In general, if we organize our data based on the parameters of the problem, we can often solve the problem much more directly.
+\end{frame}
+
+\begin{frame}{Applying this to the original problem}
+    Once again consider our list of tasks $A_1,A_2,\ldots,A_N$. Recall that we are looking for the maximum number of tasks such that the sum of their individual times, $A_i$, do not exceed $T$.\\~\\
+    This is the same thing as the problem we just did. If we sort our tasks in ascending order based on their times, we can simply keep selecting tasks until we exceed $T$.
+    \begin{block}{\textit{Analysis.} Time Complexity}
+        Sorting $n$ elements takes $n^2$ operations at worst case. If the sum of all tasks is less than or equal to $T$, the iteration will take $n$ operations; meaning a worst-case complexity of $\mathcal{O}(n^2)$.
+    \end{block}
+\end{frame}
+
+\section{Greedy Algorithms}
+% \subsection{}
+\begin{frame}{Definition}
+    
+\end{frame}
+
+\end{document}
