@@ -206,9 +206,37 @@ For $n$ tasks, there are $2^n-1$ possible ways of choosing $1$ or more tasks (i.
 \end{frame}
 
 \section{Greedy Algorithms}
-% \subsection{}
+\subsection{The Technique}
 \begin{frame}{Definition}
-    
+    A greedy algorithm always make the choice that is most optimal at the moment. This means that it makes a locally-optimal choice in the hope that this choice will lead to a global-optimal solution.
 \end{frame}
 
+\begin{frame}{How do we decide what choice is optimal?}
+    Suppose that we have some function $f$ that must be optimized for a given input. A greedy algorithm therefore makes \textit{greedy} choices at each step to ensure that $f$ is optimized. 
+\end{frame}
+
+\begin{frame}{Does it always work?}
+    Unfortunately, the greedy algorithm most often does not work. That doesn't mean it's a bad technique, it just mean that \textit{you} need to be careful with how you design your solutions.
+\end{frame}
+
+\begin{frame}{Some examples of greedy algorithms}
+    \begin{itemize}
+        \item Dijkstra's Shortest Path Algorithm and A\* Search
+        \item Kruskal's Minimum Spanning Tree Algorithm
+        \item Knapsack Problem
+        \item Coin Change Problem
+    \end{itemize}
+\end{frame}
+
+\section{The Scheduling Problem}
+\begin{frame}{Introduction}
+    It is not always easy to apply the greedy algorithm technique to a problem. We will take a look at an example of such problem---where the application of greedy algorithms is not as direct.
+\end{frame}
+
+\subsection{Problem}
+\begin{frame}{Problem Description}
+    Once again, you find yourself, an ex-Google engineer, at Foxconn. You are working on a new project and you want to complete $N$ tasks today. Each task $i$ has a priority $P_i$ and takes $T$ minutes to complete.\\~\\
+    
+    What tasks can you complete so that you maximize your productivity.
+\end{frame}
 \end{document}
