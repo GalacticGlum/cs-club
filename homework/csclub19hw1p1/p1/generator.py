@@ -1,9 +1,6 @@
 from random import randint, random, choice
 from string import ascii_lowercase
 
-MAX_RADIUS = 10000
-MAX_THETA = 360
-
 def uniform_random_list(a, b, n):
     x = a
     result = []
