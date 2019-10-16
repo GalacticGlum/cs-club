@@ -1,0 +1,298 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{mathtools}
+\usepackage{breqn}
+\usetikzlibrary{positioning,shapes,fit,arrows}
+\graphicspath{ {./images/} }
+
+\usepackage{xcolor}
+\definecolor{maroon}{cmyk}{0, 0.87, 0.68, 0.32}
+\definecolor{halfgray}{gray}{0.55}
+\definecolor{ipython_frame}{RGB}{207, 207, 207}
+\definecolor{ipython_bg}{RGB}{247, 247, 247}
+\definecolor{ipython_red}{RGB}{186, 33, 33}
+\definecolor{ipython_green}{RGB}{0, 128, 0}
+\definecolor{ipython_cyan}{RGB}{64, 128, 128}
+\definecolor{ipython_purple}{RGB}{170, 34, 255}
+
+\usepackage{listings}
+\lstset{
+    breaklines=true,
+    %
+    extendedchars=true,
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+
+\usepackage{animate}
+
+%%
+%% Python definition (c) 1998 Michael Weber
+%% Additional definitions (2013) Alexis Dimitriadis
+%% modified by me (should not have empty lines)
+%%
+\lstdefinelanguage{iPython}{
+    morekeywords={access,and,break,class,continue,def,del,elif,else,except,exec,finally,for,from,global,if,import,in,is,lambda,not,or,pass,print,raise,return,try,while},%
+    %
+    % Built-ins
+    morekeywords=[2]{abs,all,any,basestring,bin,bool,bytearray,callable,chr,classmethod,cmp,compile,complex,delattr,dict,dir,divmod,enumerate,eval,execfile,file,filter,float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,long,map,max,memoryview,min,next,object,oct,open,ord,pow,property,range,raw_input,reduce,reload,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,vars,xrange,zip,apply,buffer,coerce,intern},%
+    %
+    sensitive=true,%
+    morecomment=[l]\#,%
+    morestring=[b]',%
+    morestring=[b]",%
+    %
+    morestring=[s]{'''}{'''},% used for documentation text (mulitiline strings)
+    morestring=[s]{"""}{"""},% added by Philipp Matthias Hahn
+    %
+    morestring=[s]{r'}{'},% `raw' strings
+    morestring=[s]{r"}{"},%
+    morestring=[s]{r'''}{'''},%
+    morestring=[s]{r"""}{"""},%
+    morestring=[s]{u'}{'},% unicode strings
+    morestring=[s]{u"}{"},%
+    morestring=[s]{u'''}{'''},%
+    morestring=[s]{u"""}{"""},%
+    %
+    % {replace}{replacement}{lenght of replace}
+    % *{-}{-}{1} will not replace in comments and so on
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+    %
+    {^}{{{\color{ipython_purple}\^{}}}}1
+    {=}{{{\color{ipython_purple}=}}}1
+    %
+    {+}{{{\color{ipython_purple}+}}}1
+    {*}{{{\color{ipython_purple}$^\ast$}}}1
+    {/}{{{\color{ipython_purple}/}}}1
+    %
+    {+=}{{{+=}}}1
+    {-=}{{{-=}}}1
+    {*=}{{{$^\ast$=}}}1
+    {/=}{{{/=}}}1,
+    literate=
+    *{-}{{{\color{ipython_purple}-}}}1
+     {?}{{{\color{ipython_purple}?}}}1,
+    %
+    identifierstyle=\color{black}\ttfamily,
+    commentstyle=\color{ipython_cyan}\ttfamily,
+    stringstyle=\color{ipython_red}\ttfamily,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    %
+    rulecolor=\color{ipython_frame},
+    frame=single,
+    frameround={t}{t}{t}{t},
+    framexleftmargin=6mm,
+    numbers=left,
+    numberstyle=\tiny\color{halfgray},
+    %
+    %
+    backgroundcolor=\color{ipython_bg},
+    %   extendedchars=true,
+    basicstyle=\scriptsize,
+    keywordstyle=\color{ipython_green}\ttfamily,
+}
+
+% \definecolor{light-gray}{gray}{0.95}
+\surroundwithmdframed[
+  hidealllines=true,
+  innerleftmargin=15pt,
+  innertopmargin=0pt,
+  innerbottommargin=0pt]{lstlisting}
+
+\usetheme{Berlin}
+\usefonttheme[onlymath]{serif}
+
+% \usecolortheme{crane}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+
+\setbeamertemplate{frametitle continuation}[from second][(contd.)]
+
+\newcommand{\sectionFrame}[3]
+{
+    \section{#3}
+    \begin{frame}
+    \begin{block}{}
+    \begin{center}
+        \Huge{#1}\\[0.5ex]
+        \large{#2}
+    \end{center}
+    \end{block}
+    \end{frame}
+}
+
+\usepackage{caption}
+\DeclareMathOperator{\MCE}{MCE}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+\title{Dynamic Programming}
+\subtitle{Part \rom{1}: Introduction}
+\institute{Stephen Lewis Secondary School}
+\author{Computer Science Club}
+\date{October 15, 2019}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Introduction}
+\subsection{Definition}
+\begin{frame}{What is it?}
+    A powerful, general-purpose algorithmic design technique. It is especially good at, and is generally used for optimization problems.
+    \begin{itemize}
+        \item Dynamic programming is an optimized brute-force
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{When is it used?}
+    Dynamic programming is really good when we can break down our problem into smaller subproblems of the same nature.\\~\\We \textit{reuse} previous solutions to efficiently find new solutions.
+\end{frame}
+
+\section{Fibonacci}
+\subsection{Example Problem (Fibonacci)}
+\begin{frame}{Problem Description}
+If:
+    \begin{itemize}
+        \item $F_1=F_2=1$
+        \item $F_n=F_{n-1}+F_{n-2}$ where $n > 2$
+    \end{itemize}
+    
+then, compute for $F_n$.
+\end{frame}
+
+\begin{frame}[fragile]{Na\"{i}ve Solution}
+    We can implement the algorithm directly as a recursive function:
+\begin{center}
+\begin{lstlisting}[language=iPython]
+def fib(n):
+    if n <= 2: return 1
+    return fib(n - 1) + fib(n-2)
+\end{lstlisting}
+\end{center}
+
+\textbf{Running Time}: Exponential
+\end{frame}
+
+\subsection{Memoization}
+\begin{frame}[fragile]{DP Solution \rom{1} (Memoization)}
+    \begin{itemize}
+        \item There is overlap between computing successive Fibonacci numbers (i.e. computing $F_n$ and $F_{n-1}$ both require $F_{n-2}$).
+        \item \textbf{Memoization}: only compute once.
+    \end{itemize}
+
+\begin{center}
+\begin{lstlisting}[language=iPython, mathescape=true]
+memo = {}
+def fib(n):
+    # Check if we already computed ${\color{ipython_cyan} F_n}$
+    if n in memo: return memo[n]
+    
+    # Compute ${\color{ipython_cyan} F_n}$
+    if n <= 2: result = 1
+    else: result = fib(n - 1) + fib(n-2)
+    
+    memo[n] = result
+    return result
+\end{lstlisting}
+\end{center}
+\end{frame}
+
+\begin{frame}{In general...}
+    We \textit{memoize} solutions to \textit{subproblems} so that we can reuse them to solve the actual problem.\\~\\
+    A subproblem is a \textbf{smaller} version of the same problem.
+    \begin{block}{Example: Fibonacci}
+        \begin{itemize}
+            \item Our subproblems are computing $F_{n-1},F_{n-2},\ldots,F_1$.
+            \item Our actual problem is computing $F_n$.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\subsection{Bottom-up algorithm}
+\begin{frame}{Introduction}
+    \begin{itemize}
+        \item A memoized recursive algorithm thinks of the problem starting from the top and works its way down (the final problem we want to solve).
+        \item A bottom-up algorithm does the reverse: starts from the bottom and works its way up to the final problem.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{DP Solution \rom{2} (Bottom-up)}
+    \textbf{Strategy:} Starting from $k=1$, we successively compute the next term, $F_{k+1}$, until we reach $F_n$.
+\begin{center}
+\begin{lstlisting}[language=iPython, mathescape=true]
+def fibonacci(n):
+    fib = {}
+    for k in range(1, n + 1):
+        if k <= 2: result = 1
+        else: result = fib[k - 1] + fib[k - 2]
+        fib[k] = result
+    
+    return fib[n]
+\end{lstlisting}
+\end{center}
+\end{frame}
+
+\begin{frame}{In general...}
+    \begin{itemize}
+        \item Bottom-up algorithms are essentially \textit{unravelling} the recursive memoized solution and writing it out \textit{sequentially}.
+        \item Exact same running time
+    \end{itemize}
+\end{frame}
+
+\section{Binomial Coefficients}
+\subsection{Example Problem (Binomial Coefficients)}
+\begin{frame}{Problem Description}
+    \begin{itemize}
+        \item A binomial coefficient, $C(n,k)$, gives the coefficient of $x^k$ in the expansion of $(1+x)^n$.
+        \item It can be defined recursively as $C(n,k)=C(n-1,k-1)+C(n-1,k)$.
+    \end{itemize}
+    
+    Compute the value of $C(n,k)$.
+\end{frame}
+
+\begin{frame}[fragile]{Solution}
+    \textbf{Remember:} DP is used to \textit{optimize} problems that depend on smaller subproblems (i.e. recursion).
+    Since we are given the recursive formula, we can easily apply memoization or bottom-up to get an efficient solution:
+\begin{lstlisting}[language=iPython, mathescape=true]
+memo = {}
+def nck(n, k):
+    if k > n: return 0
+    
+    if (n, k) in memo: return memo[(n, k)]
+   
+    if n == k or k == 0: result = 1
+    else: result = nck(n - 1, k) + nck(n - 1, k - 1)
+    
+    memo[(n, k)] = result
+    return result
+\end{lstlisting}
+\end{frame}
+\end{document}
