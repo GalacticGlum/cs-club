@@ -47,7 +47,9 @@
     \begin{equation*}
         \Theta\left(\beta(n)\right) + S\cdot\Theta\left(F(k)\right)
     \end{equation*}
-    where $S$ is the number of subproblems, $\Theta\left(F(k)\right)$ is the time per subproblem, and $\Theta\left(\beta(n)\right)$ is the additional time to compute the final problem.
+    where $S$ is the number of subproblems, $\Theta\left(F(k)\right)$ is the time per subproblem, and $\Theta\left(\beta(n)\right)$ is the additional time to compute the final problem.\\~\\
+    
+\textbf{Note:} we express the running time as an \textit{average} bound as we do not necessarily know the tight bound. You can however find this. 
 \end{frame}
 
 \section{The Pairing Problem}
@@ -125,4 +127,19 @@ In this case, the memoized solution does \textit{not} have the same running time
     \end{enumerate}
 \end{frame}
 
+\section{Pseudo-polynomial time}
+\begin{frame}[fragile]{Not quite polynomial, but close enough...}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{lessons/images/fundemental_theorem_of_engineering.png}
+    \end{figure}
+\end{frame}
+\begin{frame}{Description}
+    If $f(n)=\Theta\left(n\beta\right)$ then is $f$ in polynomial time?\\~\\
+    {\Huge\textbf{No.}}\\~\\
+    The function $f$ is exponential at best; however, if $\beta$ is small then $f$ imitates a polynomial function.
+    \begin{block}{Pseudo-polynomial time}
+        An algorithm is pseudo-polynomial time if the length and numeric value of the input is polynomial.
+    \end{block}
+\end{frame}
 \end{document}
