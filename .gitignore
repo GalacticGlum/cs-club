@@ -564,3 +564,5 @@ ASALocalRun/
 healthchecksdb
 
 *.exe
+
+.vscode/

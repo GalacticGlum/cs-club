@@ -1,0 +1,43 @@
+checker: slpr2020c1p3_checker.py
+archive: p3_data.zip
+test_cases:
+- {in: p3.sample.1.in, points: 0}
+- {in: p3.sample.2.in, points: 0}
+- batched:
+  - {in: p3.1.1.in}
+  - {in: p3.1.2.in}
+  - {in: p3.1.3.in}
+  - {in: p3.1.4.in}
+  - {in: p3.1.5.in}
+  points: 10
+- batched:
+  - {in: p3.2.1.in}
+  - {in: p3.2.2.in}
+  - {in: p3.2.3.in}
+  - {in: p3.2.4.in}
+  - {in: p3.2.5.in}
+  points: 10
+- batched:
+  - {in: p3.3.1.in}
+  - {in: p3.3.2.in}
+  - {in: p3.3.3.in}
+  - {in: p3.3.4.in}
+  - {in: p3.3.5.in}
+  - {in: p3.3.6.in}
+  - {in: p3.3.7.in}
+  - {in: p3.3.8.in}
+  - {in: p3.3.9.in}
+  - {in: p3.3.10.in}
+  points: 20
+- batched:
+  - {in: p3.4.1.in}
+  - {in: p3.4.2.in}
+  - {in: p3.4.3.in}
+  - {in: p3.4.4.in}
+  - {in: p3.4.5.in}
+  - {in: p3.4.6.in}
+  - {in: p3.4.7.in}
+  - {in: p3.4.8.in}
+  - {in: p3.4.9.in}
+  - {in: p3.4.10.in}
+  points: 60
