@@ -3,6 +3,12 @@
 #include <fstream>
 #include <vector>
 #include <limits>
+#include <algorithm>
+
+bool is_file_empty(std::ifstream& pFile)
+{
+    return pFile.peek() == std::ifstream::traits_type::eof();
+}
 
 int main(int argc, char** argv)
 {
@@ -15,14 +21,22 @@ int main(int argc, char** argv)
     std::ifstream judge_input_file(judge_input_filename);
     std::ifstream process_output_file(process_output_filename); 
 
+    if (is_file_empty(process_output_file))
+    {
+        return 1;
+    }
+    
     int k;
-    process_output_file >> k;
+    if (!(process_output_file >> k))
+    {
+        return 1;
+    }
 
     int n;
     std::string data_input;
 
     judge_input_file >> n;
-    std::vector<int> original_data(n);
+    std::vector<int> original_data;
     for (int i = 0; i < n; ++i)
     {
         judge_input_file >> data_input;
@@ -37,7 +51,7 @@ int main(int argc, char** argv)
     }
 
     int x;
-    std::vector<int> shifted_data(n);
+    std::vector<int> shifted_data;
     for (int i = 0; i < n; ++i)
     {
         judge_input_file >> x;
@@ -48,10 +62,19 @@ int main(int argc, char** argv)
     process_output_file.close();
 
     bool result = true;
+    if (k < 0)
+    {
+        std::rotate(shifted_data.begin(), shifted_data.begin() - k, shifted_data.end());
+    }
+    else if(k > 0)
+    {
+        std::rotate(shifted_data.rbegin(), shifted_data.rbegin() + k, shifted_data.rend());   
+    }
+
     for (int i = 0; i < n; ++i)
     {
         if (original_data[i] == inf) continue;
-        if (original_data[i] != shifted_data[(i + k) % n])
+        if (original_data[i] != shifted_data[i])
         {
             result = false;
             break;
